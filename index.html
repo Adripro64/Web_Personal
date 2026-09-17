@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>La biblioteca de mi novia</title>
+    </head>
+    <style>
+        /* 1. IMPORTACIÓN DE FUENTES */
+        @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&family=Poppins:wght@300;400;600&display=swap');
+
+        /* 2. BASE Y FONDO */
+        body {
+            margin: 0;
+            font-family: 'Poppins', sans-serif !important; 
+            color: #1e293b;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: linear-gradient(135deg, #a7ffeb 0%, #e0f7fa 100%);
+            z-index: -1;
+        }
+
+        #contenido-protegido {
+            display: none;
+        }
+
+        /* 3. CABECERA Y TEXTOS */
+        h1 {
+            text-align: center;
+            font-family: 'Dancing Script', cursive !important;
+            font-size: clamp(30px, 6vw, 50px);
+            margin: 40px 0;
+            color: #1a237e;
+            font-weight: 800;
+        }
+
+        .contenedor_0 {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 40px;
+            padding: 25px;
+            background: rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(10px);
+            border-radius: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            font-size: 18px;
+            color: #1e293b !important; /* TEXTO EN NEGRO */
+            line-height: 1.6;
+            font-weight: bold;
+        }
+
+        .centrada {
+            display: block;
+            margin: auto;
+            border-radius: 24px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            border: 6px solid white;
+            margin-bottom: 30px;
+            max-width: 90%;
+        }
+
+        /* 4. REJILLA Y TARJETAS AZUL OSCURO */
+        [class^="contenedor_"]:not(.contenedor_0) {
+            display: flex;
+            flex-wrap: wrap; 
+            justify-content: center;
+            gap: 35px;
+            padding: 20px;
+            margin-top: 20px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        /* Selector específico para las tarjetas de libros */
+        [class*="c1_"], [class*="c2_"], [class*="c3_"], [class*="c4_"], 
+        [class*="c5_"], [class*="c6_"], [class*="c7_"], [class*="c8_"], 
+        [class*="c9_"], [class*="c10_"], [class*="c11_"], [class*="c12_"] {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 25px;
+            width: 260px;
+            background: rgba(26, 35, 126, 0.9) !important; 
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.2) !important;
+            border-radius: 25px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            transition: all 0.4s ease;
+            cursor: pointer;
+            text-align: center;
+            box-sizing: border-box;
+            color: white !important; /* TEXTO BLANCO SOBRE AZUL */
+            font-weight: 600;
+        }
+
+        /* Esto asegura que solo se mueva la tarjeta que tocas, no toda la sección */
+        [class*="c1_"]:hover, [class*="c2_"]:hover, [class*="c3_"]:hover, [class*="c4_"]:hover,
+        [class*="c5_"]:hover, [class*="c6_"]:hover, [class*="c7_"]:hover, [class*="c8_"]:hover,
+        [class*="c9_"]:hover, [class*="c10_"]:hover, [class*="c11_"]:hover, [class*="c12_"]:hover {
+            transform: translateY(-8px);
+            background: rgba(26, 35, 126, 1) !important; 
+            box-shadow: 0 15px 40px rgba(26, 35, 126, 0.4);
+            transition: all 0.3s ease;
+        }
+
+        /* Portadas de los libros */
+        [class^="contenedor_"] img {
+            width: 100%;
+            height: auto;
+            border: 5px solid white !important;
+            border-radius: 12px !important;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3) !important;
+            margin-bottom: 5px;
+        }
+
+        /* 5. MENÚ SUPERIOR */
+        .menu-superior {
+            background: rgba(26, 35, 126, 0.95);
+            backdrop-filter: blur(10px);
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 50px;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .menu-superior .logo {
+            font-family: 'Dancing Script', cursive !important;
+            font-size: 26px;
+        }
+
+        .menu-superior ul {
+            display: flex;
+            gap: 25px;
+            list-style: none;
+            margin: 0; padding: 0;
+        }
+
+        .menu-superior a {
+            color: white;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 14px;
+        }
+
+        /* 6. VISOR PDF (MODAL) */
+        .modal-pdf {
+            display: none; 
+            position: fixed;
+            z-index: 3000;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-contenido {
+            position: relative;
+            width: 85%;
+            height: 90%;
+            margin: 2.5% auto;
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            animation: zoomIn 0.3s ease;
+        }
+
+        @keyframes zoomIn {
+            from { transform: scale(0.95); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        .cerrar-modal {
+            position: absolute;
+            top: 15px; right: 25px;
+            font-size: 35px;
+            cursor: pointer;
+            color: white;
+            z-index: 3001;
+        }
+
+        /* 7. AJUSTES MÓVIL */
+        @media (max-width: 700px) {
+            .menu-superior { padding: 15px; flex-direction: column; gap: 12px; }
+            [class^="contenedor_"]:not(.contenedor_0) { flex-direction: column; align-items: center; }
+            [class*="c"] { width: 90% !important; max-width: 300px; }
+
+            .modal-contenido {
+                width: 95% !important;
+                height: 85vh !important; /* Forzamos la altura en el móvil */
+                margin: 10% auto !important;
+                -webkit-overflow-scrolling: touch; /* Mejora el scroll en iPhone */
+            }
+
+            #visor-pdf {
+                width: 100% !important;
+                height: 100% !important;
+                border: none;
+            }
+        }
+
+        /* Animación Reveal Scroll */
+        .revelar {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.8s ease-out;
+        }
+        .revelar.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+   
+    <body>
+        <div id="contenido-protegido">
+            <nav class="menu-superior">
+                <div class="logo">Biblioteca de Mi Novia</div>
+                <ul>
+                    <li><a href="index.html">Página Principal</a></li>
+                    <li><a href="Biblioteca_Tati_Pelis.html">Canciones</a></li>
+                    <li><a href="Cartas.html">Cartas</a></li>
+                    <li><a href="Créditos.html">Créditos</a></li>
+                    <li><a href="Corazao.html">Regalo</a></li>
+                </ul>
+            </nav>
+            <h1>TU PÁGINA DE LECTURA (Hecha por tu novio)</h1>
+            <p><img src="archivos y fotos/Taylor leyendo.webp" alt="Imagen" class="centrada"></p>
+            <div class="contenedor_0">
+                <p class="c0_1">Aquí encontrarás todos los libros que te molan/interesan en versión digital listos para descargar y leer.</p>
+                <p class="c0_2">Se que no te mola demasiado este tipo de lectura pero es mejor que no tenerlos, a si que espero que te guste el regalo :).</p>
+                <p class="c0_3">(Hecho con amor para ti <3)</p>
+            </div>
+
+
+            <div class="contenedor_1 revelar">
+                <p class="c1_1" onclick="abrirLibro('archivos y fotos/Powerless_1.pdf')" style="cursor: pointer;">
+                    <img src="archivos y fotos/Powerless.jpg" class="Powerless_1" width="225"><br>
+                    Powerless
+                </p>
+
+                <p class="c1_2" onclick="abrirLibro('archivos y fotos/Powerfull_1_5.pdf')" style="cursor: pointer;">
+                    <img src="archivos y fotos/Powerfull.jpg" class="Powerfull_1.5" width="225"><br>
+                    Powerfull
+                </p>
+
+                <p class="c1_3" onclick="abrirLibro('archivos y fotos/Reckless_2.pdf')" style="cursor: pointer;">
+                    <img src="archivos y fotos/Recklessjpg" class="Reckless_2" width="225"><br>
+                    Reckless
+                </p>
+            </div>
+
+
+            <div class="contenedor_2 revelar">
+                <p class="c2_1" onclick="abrirLibro('archivos y fotos/Fearless_3.pdf')" style="cursor: pointer;">
+                    <img src="archivos y fotos/Fearless.jpeg" class="Fearless_3" width="225"><br>
+                    Fearless
+                </p>
+                <p class="c2_2" onclick="abrirLibro('archivos y fotos/La Asistenta Freida McFadden.pdf')" style="cursor: pointer;">
+                    <img src="archivos y fotos/La Asistenta Libro.webp" class="La_Asistenta" width="225"><br>
+                    La asistenta
+                </p>
+                <p class="c2_3" onclick="abrirLibro('archivos y fotos/Una corte de rosas y espinas.pdf')" style="cursor: pointer;">
+                    <img src="archivos y fotos/Un corte de rosas y espinas.jpg" class="Una_Corte_De_Rosas_Y_Espinas_1" width="225"><br>
+                    Una corte de rosas y espinas
+                </p>
+            </div>
+
+            <div class="contenedor_3 revelar">
+                <p class="c3_1" onclick="abrirLibro('archivos y fotos/Una Corte de Niebla y Furia - Sarah J. Maas.pdf')" style="cursor: pointer;">
+                    <img src="archivos y fotos/Un corte de niebla y furia.jpg" class="Una_Corte_De_Niebla_Y_Furia_2" width="225"><br>
+                    Una corte de niebla y furia
+                </p>
+                <p class="c3_2" onclick="abrirLibro('archivos y fotos/Una Corte de Alas y Ruina - Sarah J. Maas.pdf')" style="cursor: pointer;">
+                    <img src="archivos y fotos/Un corte de alas y ruina.jpg" class="Una_Corte_De_Alas_Y_Ruina_3" width="225"><br>
+                    Una corte de alas y ruina
+                </p>
+                <p class="c3_3" onclick="abrirLibro('archivos y fotos/Una corte de hielo y estrellas - Sarah J Maas.pdf')" style="cursor: pointer;">
+                    <img src="archivos y fotos/Un corte de hielo y estrellas.jpg" class="Una_Corte_De_Hielo_Y_Estrellas_4" width="225"><br>
+                    Una corte de hielo y estrellas
+                </p>
+            </div>
+
+            <div class="contenedor_4 revelar">
+                <p class="c4_1" onclick="abrirLibro('archivos y fotos/Una Corte de Llamas Plateadas - Sarah J. Maas.pdf')" style="cursor: pointer;">
+                    <img src="archivos y fotos/Un corte de llamas plateadas.webp" class="Una_Corte_De_Llamas_Plateadas_5" width="225"><br>
+                    Una corte de llamas plateadas
+                </p>
+                <p class="c4_2" onclick="abrirLibro('archivos y fotos/Destrozame Tahereh Mafi.pdf')" style="cursor: pointer;">
+                    <img src="archivos y fotos/Shatter me.jpg" class="Shatter_me_1" width="225"><br>
+                    Shatter me
+                </p>
+                <p class="c4_3" onclick="abrirLibro('archivos y fotos/Libérame Tahereh Mafi.pdf')" style="cursor: pointer;">
+                    <img src="archivos y fotos/Unravel me.jpg" class="Unravel_Me_2" width="225"><br>
+                    Unravel me
+                </p>
+            </div>
+
+            <div class="contenedor_5 revelar">
+                <p class="c5_1" onclick="abrirLibro('archivos y fotos/Enciéndeme - Tahereh Mafi.pdf')" style="cursor: pointer;">
+                    <img src="archivos y fotos/Ignite me.jpg" class="Ignite_Me_3" width="225"><br>
+                    Ignite me
+                </p>
+                <p class="c5_2" onclick="abrirLibro('archivos y fotos/Reconstruyeme - Tahereh Mafi.pdf')" style="cursor: pointer;">
+                    <img src="archivos y fotos/Restore me.jpg" class="Restore_Me_4" width="225"><br>
+                    Restore me
+                </p>
+                <p class="c5_3" onclick="abrirLibro('archivos y fotos/Desafiame Tahereh Mafi.pdf')" style="cursor: pointer;">
+                    <img src="archivos y fotos/Defy me.jpg" class="Defy_me_5" width="225"><br>
+                    Defy me
+                </p>
+            </div>
+
+            <div class="contenedor_6 revelar">
+                <p class="c6_1" onclick="abrirLibro('archivos y fotos/Imagine Me Tahereh Mafi.pdf')" style="cursor: pointer;">
+                    <img src="archivos y fotos/Imagine me.jpg" class="Imagine_Me_6" width="225"><br>
+                    Imagine me
+                </p>
+                <p class="c6_2" onclick="abrirLibro('archivos y fotos/Destroy Me - Tehereh Mafi.pdf')" style="cursor: pointer;">
+                    <img src="archivos y fotos/Destroy me.jpg" class="Destroy_Me_1_5" width="225"><br>
+                    Destroy me
+                </p>
+                <p class="c6_3" onclick="abrirLibro('archivos y fotos/Fracture Me 2.5.pdf')" style="cursor: pointer;">
+                    <img src="archivos y fotos/Fracture me.jpg" class="Fracture_Me_2_5" width="225"><br>
+                    Fracture me
+                </p>
+            </div>
+
+            <div class="contenedor_7 revelar">
+                <p class="c7_1" onclick="abrirLibro('archivos y fotos/Shadow Me - Shatter Me Series.pdf')" style="cursor: pointer;">
+                    <img src="archivos y fotos/Shadow me.jpg" class="Shadow_Me_4_5" width="225"><br>
+                    Shadow me
+                </p>
+                <p class="c7_2" onclick="abrirLibro('archivos y fotos/Revelame Tahereh Mafi.pdf')" style="cursor: pointer;">
+                    <img src="archivos y fotos/Reveal me.jpg" class="Reveal_Me_5_5" width="225"><br>
+                    Reveal me
+                </p>
+                <p class="c7_3" onclick="window.open('https://es.scribd.com/document/648854287/6-5-Believe-Me-Tahereh-Mafi', '_blank')" style="cursor: pointer;">
+                    <img src="archivos y fotos/Believe me.jpg" class="Believe_Me_6_5" width="225"><br>
+                    Believe me (Enlace externo)
+                </p>
+            </div>
+
+            <div class="contenedor_8 revelar">
+                <p class="c8_1" onclick="abrirLibro('archivos y fotos/Binding 13 - Chloe Walsh.pdf')" style="cursor: pointer;">
+                    <img src="archivos y fotos/Binding 13.jpg" class="Binding_13" width="225"><br>
+                    Binding 13
+                </p>
+                <p class="c8_2" onclick="window.open('https://spread.epub.pub/epub/65b1129a120eae6601723442', '_blank')" style="cursor: pointer;">
+                    <img src="archivos y fotos/Keeping 13.jpg" class="Keeping_13" width="225"><br>
+                    Keeping 13 (Enlace externo)
+                </p>
+                <p class="c8_3" onclick="abrirLibro('archivos y fotos/Saving 6 Chloe Walsh.pdf')" style="cursor: pointer;">
+                    <img src="archivos y fotos/Saving 6.jpg" class="Saving_6" width="225"><br>
+                    Saving 6
+                </p>
+            </div>
+
+            <div class="contenedor_9 revelar">
+                <p class="c9_1" onclick="window.open('https://es.scribd.com/document/761539569/Redeeming-6', '_blank')" style="cursor: pointer;">
+                    <img src="archivos y fotos/Redeeming 6.avif" class="Redeeming_6" width="225"><br>
+                    Redeeming 6 (Enlace externo)
+                </p>
+                <p class="c9_2" onclick="abrirLibro('archivos y fotos/Taming 7 Chloe Walsh.pdf')" style="cursor: pointer;">
+                    <img src="archivos y fotos/Tamming 77.jpg" class="Taming_7" width="225"><br>
+                    Taming 7
+                </p>
+                <p class="c9_3" onclick="abrirLibro('archivos y fotos/Releasing 10 Chloe Walsh.pdf')" style="cursor: pointer;">
+                    <img src="archivos y fotos/Releasing 10.jpg" class="Releasing_10" width="225"><br>
+                    Releasing 10
+                </p>
+            </div>
+
+            <div class="contenedor_10 revelar">
+                <p class="c10_1" onclick="abrirLibro('archivos y fotos/Los siete maridos de Evelyn Hugo.pdf')" style="cursor: pointer;">
+                    <img src="archivos y fotos/Los siete maridos de Evelyn Hugo.jpg" class="Los_Siete_Maridos_De_Evelyn_Hugo" width="225"><br>
+                    Los siete maridos de Evelyn Hugo
+                </p>
+                <p class="c10_2" onclick="window.open('https://es.scribd.com/document/670122038/Mejor-Que-en-Las-Peliculas-Lynn-Painter', '_blank')" style="cursor: pointer;">
+                    <img src="archivos y fotos/mejor que en las pelis.webp" class="Mejor_Que_En_Las_Peliculas" width="225"><br>
+                    Mejor que en las películas (Enlace externo)
+                </p>
+                <p class="c10_3" onclick="abrirLibro('archivos y fotos/El color de las cosas invisibles - Andrea Longarela.pdf')" style="cursor: pointer;">
+                    <img src="archivos y fotos/El color de las cosas invisibles.jpg" class="El_Color_De_Las_Cosas_Invisibles" width="225"><br>
+                    El color de las cosas invisibles
+                </p>
+            </div>
+
+            <div class="contenedor_11 revelar">
+                <p class="c11_1" onclick="abrirLibro('archivos y fotos/Bad Ash Alina Not.pdf')" style="cursor: pointer;">
+                    <img src="archivos y fotos/Saltan chispas.jpg" class="Bad_Ash" width="225"><br>
+                    Bad ash (Trilogía entera)
+                </p>
+                <p class="c11_2" onclick="abrirLibro('archivos y fotos/Hecha de Estrellas - Ashley Herring Blake.pdf')" style="cursor: pointer;">
+                    <img src="archivos y fotos/Hecha de estrellas.jpg" class="Hecha_De_Estrellas" width="225"><br>
+                    Hecha de estrellas
+                </p>
+                <p class="c11_3" onclick="abrirLibro('archivos y fotos/Llamada a Sam Dustin Thao.pdf')" style="cursor: pointer;">
+                    <img src="archivos y fotos/Has llamado a sam.jpg" class="Has_Llamado_A_Sam" width="225"><br>
+                    Has llamado a Sam
+                </p>
+            </div>
+
+            <div class="contenedor_12 revelar">
+                <p class="c12_1" onclick="abrirLibro('archivos y fotos/bad ash suelo sagrado.pdf')" style="cursor: pointer;">
+                    <img src="archivos y fotos/Bad ash suelo sagrado.jpg" class="Bad_Ash_Suelo_Sagrado" width="225"><br>
+                    Bad ash: Suelo sagrado
+                </p>
+                <p class="c12_2" onclick="abrirLibro('archivos y fotos/Piezas Rotas Alina.pdf')" style="cursor: pointer;">
+                    <img src="archivos y fotos/Tyler.jpg" class="Bad_Ash_Tyler" width="225"><br>
+                    Bad ash: Tyler
+                </p>
+                <p class="c12_3" onclick="abrirLibro('archivos y fotos/bad ash suelo sagrado 2.pdf')" style="cursor: pointer;">
+                    <img src="archivos y fotos/Bad ash suelo sagrado 2.jpg" class="Bad_Ash_Suelo_Sagrado_2" width="225"><br>
+                    Bad ash: Suelo sagrado II
+                </p>
+            </div>
+        </div>
+        <script>
+        // --- LÓGICA DE ACCESO Y CONTRASEÑA ---
+        const passwordCorrecta = "1234"; 
+        const contenido = document.getElementById('contenido-protegido');
+
+        if (sessionStorage.getItem('accesoPermitido') === 'true') {
+            contenido.style.display = 'block';
+            iniciarFunciones();
+        } else {
+            let intento = prompt("Introduce la contraseña para ver la biblioteca:");
+            if (intento === passwordCorrecta) {
+                sessionStorage.setItem('accesoPermitido', 'true');
+                contenido.style.display = 'block';
+                iniciarFunciones();
+            } else {
+                alert("Contraseña incorrecta.");
+                window.location.reload(); 
+            }
+        }
+
+        function iniciarFunciones() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible'); 
+                    }
+                });
+            }, { threshold: 0.1 });
+            document.querySelectorAll('.revelar').forEach(el => observer.observe(el));
+        }
+
+        // --- FUNCIÓN INTELIGENTE PARA ABRIR LIBROS ---
+        function abrirLibro(ruta) {
+            // Detectamos si es un dispositivo móvil
+            const esMovil = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+
+            if (esMovil) {
+                // EXCLUSIVAMENTE EN MÓVIL: Se abre en pestaña nueva (como antes)
+                window.open(ruta, '_blank');
+            } else {
+                // EN PC: Se abre el visor elegante (modal)
+                const modal = document.getElementById('miModal');
+                const iframe = document.getElementById('visor-pdf');
+                
+                iframe.src = ""; 
+                setTimeout(() => {
+                    iframe.src = ruta;
+                    modal.style.display = 'block';
+                    document.body.style.overflow = 'hidden';
+                }, 50);
+            }
+        }
+
+        function cerrarLibro() {
+            const modal = document.getElementById('miModal');
+            const iframe = document.getElementById('visor-pdf');
+            modal.style.display = 'none';
+            iframe.src = ''; 
+            document.body.style.overflow = 'auto';
+        }
+
+        window.onclick = function(event) {
+            const modal = document.getElementById('miModal');
+            if (event.target == modal) { cerrarLibro(); }
+        };
+        </script>
+        <script defer src="/_vercel/insights/script.js"></script>
+        <div id="miModal" class="modal-pdf">
+            <span class="cerrar-modal" onclick="cerrarLibro()">&times;</span>
+            <div class="modal-contenido">
+                <iframe id="visor-pdf" src="" width="100%" height="100%" style="border:none;"></iframe>
+            </div>
+        </div>
+    </body>
+</html>

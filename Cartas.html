@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>La biblioteca de mi novia - Cartas</title>
+        <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    </head>
+    <style>
+        /* 1. IMPORTACIÓN DE FUENTES (por si el link de arriba tarda) */
+        @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&family=Poppins:wght@300;400;600&display=swap');
+
+        /* 2. BASE Y FONDO */
+        body {
+            margin: 0;
+            font-family: 'Poppins', sans-serif !important;
+            color: #1e293b;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: linear-gradient(135deg, #a7ffeb 0%, #e0f7fa 100%);
+            z-index: -1;
+        }
+
+        #contenido-protegido {
+            display: none;
+        }
+
+        /* 3. CABECERA Y TEXTOS */
+        h1 {
+            text-align: center;
+            font-family: 'Dancing Script', cursive !important;
+            font-size: clamp(30px, 6vw, 50px);
+            margin: 40px 0;
+            color: #1a237e;
+            font-weight: 800;
+        }
+
+        .contenedor_0 {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 40px;
+            padding: 25px;
+            background: rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(10px);
+            border-radius: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            font-size: 18px;
+            color: #1e293b !important;
+            line-height: 1.6;
+            font-weight: bold;
+        }
+
+        /* 4. REJILLA DE CARTAS (mismo estilo que las tarjetas de libros) */
+        .contenedor-cartas {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 35px;
+            padding: 20px;
+            margin: 20px auto 60px;
+            width: 100%;
+            max-width: 1100px;
+            box-sizing: border-box;
+        }
+
+        .carta-dia {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 30px 25px;
+            width: 220px;
+            height: 170px;
+            background: rgba(26, 35, 126, 0.9);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 25px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            transition: all 0.4s ease;
+            cursor: pointer;
+            text-align: center;
+            box-sizing: border-box;
+            color: white;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: aparecer 0.6s ease forwards;
+        }
+
+        @keyframes aparecer {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .carta-dia .icono-carta {
+            font-size: 34px;
+            margin-bottom: 12px;
+        }
+
+        .carta-dia .etiqueta-dia {
+            font-family: 'Dancing Script', cursive;
+            font-size: 28px;
+            font-weight: 600;
+            line-height: 1;
+        }
+
+        .carta-dia:hover {
+            transform: translateY(-8px);
+            background: rgba(26, 35, 126, 1);
+            box-shadow: 0 15px 40px rgba(26, 35, 126, 0.4);
+        }
+
+        .sin-cartas {
+            text-align: center;
+            max-width: 500px;
+            margin: 20px auto 60px;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(10px);
+            border-radius: 25px;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            color: #1e293b;
+            font-size: 17px;
+            font-weight: 600;
+        }
+
+        /* 5. MENÚ SUPERIOR */
+        .menu-superior {
+            background: rgba(26, 35, 126, 0.95);
+            backdrop-filter: blur(10px);
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 50px;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .menu-superior .logo {
+            font-family: 'Dancing Script', cursive !important;
+            font-size: 26px;
+        }
+
+        .menu-superior ul {
+            display: flex;
+            gap: 25px;
+            list-style: none;
+            margin: 0; padding: 0;
+        }
+
+        .menu-superior a {
+            color: white;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 14px;
+        }
+
+        /* 6. VISOR PDF (MODAL) - idéntico al de la página principal */
+        .modal-pdf {
+            display: none;
+            position: fixed;
+            z-index: 3000;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-contenido {
+            position: relative;
+            width: 85%;
+            height: 90%;
+            margin: 2.5% auto;
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            animation: zoomIn 0.3s ease;
+        }
+
+        @keyframes zoomIn {
+            from { transform: scale(0.95); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        .cerrar-modal {
+            position: absolute;
+            top: 15px; right: 25px;
+            font-size: 35px;
+            cursor: pointer;
+            color: white;
+            z-index: 3001;
+        }
+
+        /* 7. AJUSTES MÓVIL */
+        @media (max-width: 700px) {
+            .menu-superior { padding: 15px; flex-direction: column; gap: 12px; }
+
+            .carta-dia { width: 42%; min-width: 130px; height: 130px; padding: 15px; }
+            .carta-dia .icono-carta { font-size: 26px; margin-bottom: 8px; }
+            .carta-dia .etiqueta-dia { font-size: 22px; }
+
+            .modal-contenido {
+                width: 95% !important;
+                height: 85vh !important;
+                margin: 10% auto !important;
+                -webkit-overflow-scrolling: touch;
+            }
+
+            #visor-pdf {
+                width: 100% !important;
+                height: 100% !important;
+                border: none;
+            }
+        }
+    </style>
+
+    <body>
+        <div id="contenido-protegido">
+            <nav class="menu-superior">
+                <div class="logo">Biblioteca de Mi Novia</div>
+                <ul>
+                    <li><a href="index.html">Página Principal</a></li>
+                    <li><a href="Biblioteca_Tati_Pelis.html">Canciones</a></li>
+                    <li><a href="Cartas.html">Cartas</a></li>
+                    <li><a href="Créditos.html">Créditos</a></li>
+                    <li><a href="Corazao.html">Regalo</a></li>
+                </ul>
+            </nav>
+
+            <h1>UNA CARTA CADA DÍA</h1>
+            <div class="contenedor_0">
+                <p>Cada día te dejo aquí una cartita nueva. Pulsa sobre el día que quieras leer.</p>
+            </div>
+
+            <div id="contenedor-cartas" class="contenedor-cartas"></div>
+        </div>
+
+        <script>
+        // =====================================================
+        //  LISTA DE CARTAS — AÑADE UNA LÍNEA CADA DÍA
+        // =====================================================
+        // Pasos para añadir la carta del día:
+        //   1. Sube el PDF a la carpeta "archivos y fotos/cartas/"
+        //      (por ejemplo, con el nombre "dia1.pdf").
+        //   2. Añade una línea nueva al array de abajo con el
+        //      número de día y la ruta al archivo.
+        //   3. Guarda y sube los cambios a la web.
+        //
+        // Ejemplo:
+        // { dia: 1, archivo: "archivos y fotos/cartas/dia1.pdf" },
+        //
+        const cartas = [
+            // { dia: 1, archivo: "archivos y fotos/cartas/dia1.pdf" },
+        ];
+        // =====================================================
+
+        const passwordCorrecta = "1234";
+        const contenido = document.getElementById('contenido-protegido');
+
+        if (sessionStorage.getItem('accesoPermitido') === 'true') {
+            contenido.style.display = 'block';
+            pintarCartas();
+        } else {
+            window.location.href = "index.html";
+        }
+
+        function pintarCartas() {
+            const contenedor = document.getElementById('contenedor-cartas');
+            contenedor.innerHTML = '';
+
+            if (cartas.length === 0) {
+                contenedor.outerHTML = '<div class="sin-cartas" id="contenedor-cartas-vacio">Todavía no hay cartas por aquí… ¡vuelve pronto! 💌</div>';
+                return;
+            }
+
+            cartas.forEach((carta, index) => {
+                const div = document.createElement('div');
+                div.className = 'carta-dia';
+                div.style.animationDelay = (index * 0.08) + 's';
+                div.onclick = () => abrirLibro(carta.archivo);
+                div.innerHTML = '<div class="icono-carta">💌</div><div class="etiqueta-dia">Día ' + carta.dia + '</div>';
+                contenedor.appendChild(div);
+            });
+        }
+
+        // --- FUNCIÓN INTELIGENTE PARA ABRIR PDFS (idéntica a la de index.html) ---
+        function abrirLibro(ruta) {
+            const esMovil = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+
+            if (esMovil) {
+                window.open(ruta, '_blank');
+            } else {
+                const modal = document.getElementById('miModal');
+                const iframe = document.getElementById('visor-pdf');
+
+                iframe.src = "";
+                setTimeout(() => {
+                    iframe.src = ruta;
+                    modal.style.display = 'block';
+                    document.body.style.overflow = 'hidden';
+                }, 50);
+            }
+        }
+
+        function cerrarLibro() {
+            const modal = document.getElementById('miModal');
+            const iframe = document.getElementById('visor-pdf');
+            modal.style.display = 'none';
+            iframe.src = '';
+            document.body.style.overflow = 'auto';
+        }
+
+        window.onclick = function(event) {
+            const modal = document.getElementById('miModal');
+            if (event.target == modal) { cerrarLibro(); }
+        };
+        </script>
+        <script defer src="/_vercel/insights/script.js"></script>
+
+        <div id="miModal" class="modal-pdf">
+            <span class="cerrar-modal" onclick="cerrarLibro()">&times;</span>
+            <div class="modal-contenido">
+                <iframe id="visor-pdf" src="" width="100%" height="100%" style="border:none;"></iframe>
+            </div>
+        </div>
+    </body>
+</html>
