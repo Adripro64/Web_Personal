@@ -10,15 +10,15 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
-        /* === VARIABLES DE COLOR === */
+        /* === VARIABLES DE COLOR: NOCHE A TURQUESA === */
         :root {
-            --noche-profunda: #0b132b;
-            --azul-noche: #1c2541;
-            --azul-polvo: #3a506b;
-            --atardecer-rosita: #ff9a9e;
-            --melocoton: #fecfef;
-            --blanco-cristal: rgba(255, 255, 255, 0.1);
-            --borde-cristal: rgba(255, 255, 255, 0.2);
+            --noche-profunda: #030613;
+            --azul-noche: #0a192f;
+            --turquesa-profundo: #005a70;
+            --turquesa-brillante: #00d2ff;
+            --turquesa-claro: #a8f0ff;
+            --blanco-cristal: rgba(255, 255, 255, 0.08);
+            --borde-cristal: rgba(0, 210, 255, 0.3);
             --texto-claro: #f4f4f9;
         }
 
@@ -31,13 +31,18 @@
             min-height: 100vh;
         }
 
-        /* Degradado Atardecer-Noche fijo */
+        /* Degradado Noche a Turquesa fijo (Vertical y centrado) */
         body::before {
             content: "";
             position: fixed;
             top: 0; left: 0;
             width: 100%; height: 100%;
-            background: linear-gradient(135deg, var(--noche-profunda) 0%, var(--azul-noche) 40%, var(--azul-polvo) 70%, var(--atardecer-rosita) 100%);
+            /* 180deg hace que sea de arriba a abajo. El turquesa entra fuerte a partir del 50% */
+            background: linear-gradient(180deg, 
+                var(--noche-profunda) 0%, 
+                var(--azul-noche) 40%, 
+                var(--turquesa-profundo) 55%, 
+                var(--turquesa-brillante) 100%);
             z-index: -2;
         }
 
@@ -46,10 +51,10 @@
             padding-bottom: 50px;
         }
 
-        /* Animación de hojitas cayendo (Estilo Heartstopper) */
+        /* Animación de hojitas cayendo */
         .hoja {
             position: fixed;
-            color: var(--melocoton);
+            color: var(--turquesa-brillante);
             font-size: 1.5rem;
             animation: caer 10s linear infinite;
             z-index: -1;
@@ -62,7 +67,7 @@
 
         /* 3. MENÚ SUPERIOR (GLASSMORPHISM) */
         .menu-superior {
-            background: rgba(11, 19, 43, 0.6);
+            background: rgba(3, 6, 19, 0.7);
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
             color: var(--texto-claro);
@@ -74,20 +79,20 @@
             top: 0;
             z-index: 1000;
             border-bottom: 1px solid var(--borde-cristal);
-            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.4);
         }
 
         .menu-superior .logo {
             font-family: 'Caveat', cursive !important;
             font-size: 32px;
-            color: var(--melocoton);
-            text-shadow: 1px 1px 5px rgba(255, 154, 158, 0.5);
+            color: var(--turquesa-claro);
+            text-shadow: 1px 1px 8px rgba(0, 210, 255, 0.5);
             text-decoration: none;
             transition: color 0.3s ease;
         }
 
         .menu-superior .logo:hover {
-            color: var(--atardecer-rosita);
+            color: var(--turquesa-brillante);
         }
 
         .menu-superior ul {
@@ -106,7 +111,7 @@
         }
 
         .menu-superior a:hover {
-            color: var(--atardecer-rosita);
+            color: var(--turquesa-brillante);
         }
 
         /* 4. CABECERA Y TEXTOS INTRODUCTORIOS */
@@ -115,8 +120,8 @@
             font-family: 'Caveat', cursive !important;
             font-size: clamp(40px, 8vw, 60px);
             margin: 50px 0 20px 0;
-            color: var(--melocoton);
-            text-shadow: 2px 2px 10px rgba(255, 154, 158, 0.5);
+            color: var(--turquesa-claro);
+            text-shadow: 2px 2px 15px rgba(0, 210, 255, 0.6);
             font-weight: 600;
         }
 
@@ -124,7 +129,7 @@
             display: block;
             margin: auto;
             border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
             margin-bottom: 40px;
             max-width: 90%;
             width: 400px;
@@ -157,23 +162,23 @@
             max-width: 800px;
             margin: 0 auto 30px;
             padding: 20px 30px;
-            background: rgba(11, 19, 43, 0.5);
+            background: rgba(10, 25, 47, 0.5);
             backdrop-filter: blur(12px);
             border-radius: 20px;
-            border: 1px solid var(--atardecer-rosita);
-            box-shadow: 0 8px 32px 0 rgba(255, 154, 158, 0.2);
+            border: 1px solid var(--turquesa-brillante);
+            box-shadow: 0 8px 32px 0 rgba(0, 210, 255, 0.2);
             animation: latido 3s infinite alternate;
         }
 
         @keyframes latido {
-            0% { box-shadow: 0 8px 32px 0 rgba(255, 154, 158, 0.1); }
-            100% { box-shadow: 0 8px 32px 0 rgba(255, 154, 158, 0.4); }
+            0% { box-shadow: 0 8px 32px 0 rgba(0, 210, 255, 0.1); }
+            100% { box-shadow: 0 8px 32px 0 rgba(0, 210, 255, 0.5); }
         }
 
         .contador-amor h3 {
             font-family: 'Caveat', cursive;
             font-size: 32px;
-            color: var(--melocoton);
+            color: var(--turquesa-claro);
             margin-bottom: 10px;
             margin-top: 0;
             font-weight: 600;
@@ -187,7 +192,7 @@
         }
 
         .numeros-destacados {
-            color: var(--atardecer-rosita);
+            color: var(--turquesa-brillante);
             font-size: 24px;
         }
 
@@ -206,14 +211,14 @@
             border: 1px solid var(--borde-cristal);
             border-radius: 20px;
             padding: 35px;
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.4);
             position: relative;
         }
 
         .pergamino h3 {
             font-family: 'Caveat', cursive;
             font-size: 36px;
-            color: var(--melocoton);
+            color: var(--turquesa-claro);
             margin-bottom: 15px;
             margin-top: 0;
         }
@@ -259,7 +264,7 @@
         .firmas-nombres {
             font-family: 'Caveat', cursive;
             font-size: 26px;
-            color: var(--melocoton);
+            color: var(--turquesa-brillante);
             margin-top: -10px;
         }
 
@@ -285,11 +290,11 @@
             flex-direction: column;
             align-items: center;
             background: #ffffff !important; 
-            color: #333333 !important; 
+            color: #112240 !important; 
             padding: 15px 15px 30px 15px;
             border-radius: 5px;
             width: 250px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.4);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
             transition: all 0.3s ease;
             cursor: pointer;
             text-align: center;
@@ -308,7 +313,7 @@
         [class^="contenedor_"]:not(.contenedor_0) > p:hover {
             transform: scale(1.05) rotate(0deg);
             z-index: 10;
-            box-shadow: 0 15px 30px rgba(0,0,0,0.5);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.6);
         }
 
         [class^="contenedor_"] img {
@@ -329,7 +334,7 @@
             z-index: 3000;
             top: 0; left: 0;
             width: 100%; height: 100%;
-            background: rgba(11, 19, 43, 0.85); 
+            background: rgba(3, 6, 19, 0.9); 
             backdrop-filter: blur(8px);
         }
 
@@ -342,7 +347,7 @@
             border-radius: 20px;
             overflow: hidden;
             animation: zoomIn 0.3s ease;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.6);
         }
 
         @keyframes zoomIn {
@@ -360,7 +365,7 @@
             transition: color 0.3s ease;
         }
         .cerrar-modal:hover {
-            color: var(--atardecer-rosita);
+            color: var(--turquesa-brillante);
         }
 
         /* WIDGET MUSICAL & FOOTER */
@@ -372,13 +377,13 @@
         .seccion-musica h2 {
             font-family: 'Caveat', cursive;
             font-size: 35px;
-            color: var(--melocoton);
+            color: var(--turquesa-claro);
             margin-bottom: 20px;
         }
         .spotify-iframe {
             border-radius: 12px;
             border: none;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.5);
             width: 100%;
             max-width: 500px;
             height: 152px;
@@ -391,9 +396,9 @@
             color: var(--texto-claro);
             margin-top: 20px;
         }
-        footer i { color: var(--atardecer-rosita); margin: 0 5px; }
+        footer i { color: var(--turquesa-brillante); margin: 0 5px; }
         .cat-icon { font-size: 1.5rem; transition: color 0.3s; cursor: pointer;}
-        .cat-icon:hover { color: var(--melocoton); }
+        .cat-icon:hover { color: var(--turquesa-claro); }
 
         @media (max-width: 700px) {
             .menu-superior { padding: 15px; flex-direction: column; gap: 12px; }
@@ -445,7 +450,7 @@
         <div class="contenedor_0">
             <p class="c0_1">Aquí encontrarás todos los libros que te molan/interesan en versión digital listos para descargar y leer.</p>
             <p class="c0_2">Sé que no te mola demasiado este tipo de lectura pero es mejor que no tenerlos, así que espero que te guste el regalo :).</p>
-            <p class="c0_3" style="font-family: 'Caveat', cursive; font-size: 26px; color: var(--melocoton); margin-top: 15px;">(Hecho con amor para ti 🤍)</p>
+            <p class="c0_3" style="font-family: 'Caveat', cursive; font-size: 26px; color: var(--turquesa-claro); margin-top: 15px;">(Hecho con amor para ti 🤍)</p>
         </div>
 
         <!-- CONTADOR DE DÍAS -->
@@ -464,7 +469,7 @@
                 <div class="firma-container">
                     <span class="etiqueta-firma">Firmado de por vida:</span>
                     <svg class="svg-firma" viewBox="0 0 300 100" xmlns="http://www.w3.org/2000/svg">
-                        <path class="trazo-firma" d="M 10,80 Q 50,10 90,60 T 170,40 Q 210,90 260,30" fill="transparent" stroke="var(--atardecer-rosita)" stroke-width="4" stroke-linecap="round"/>
+                        <path class="trazo-firma" d="M 10,80 Q 50,10 90,60 T 170,40 Q 210,90 260,30" fill="transparent" stroke="var(--turquesa-brillante)" stroke-width="4" stroke-linecap="round"/>
                     </svg>
                     <div class="firmas-nombres">Adrián & Tati</div>
                 </div>
@@ -724,7 +729,7 @@
                 if(años > 0) texto += `<span class="numeros-destacados">${años}</span> años, `;
                 texto += `<span class="numeros-destacados">${meses}</span> meses, <span class="numeros-destacados">${dias}</span> días,<br>`;
                 texto += `<span class="numeros-destacados">${horas}</span> horas, <span class="numeros-destacados">${minutos}</span> min y <span class="numeros-destacados">${segundos}</span> s<br>`;
-                texto += `<span style="font-family: 'Caveat', cursive; font-size: 26px; color: var(--atardecer-rosita); display:block; margin-top:10px;">compartiendo esta locura ✨</span>`;
+                texto += `<span style="font-family: 'Caveat', cursive; font-size: 26px; color: var(--turquesa-brillante); display:block; margin-top:10px;">compartiendo esta locura ✨</span>`;
 
                 document.getElementById("tiempo-juntos").innerHTML = texto;
             }
