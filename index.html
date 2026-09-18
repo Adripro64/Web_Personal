@@ -1,143 +1,93 @@
 <!DOCTYPE html>
 <html lang="es">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>La biblioteca de mi novia</title>
-    </head>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>La biblioteca de mi novia 🌙✨</title>
+    
+    <!-- 1. IMPORTACIÓN DE FUENTES AESTHETIC E ICONOS -->
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600&family=Nunito:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
     <style>
-        /* 1. IMPORTACIÓN DE FUENTES */
-        @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&family=Poppins:wght@300;400;600&display=swap');
+        /* === VARIABLES DE COLOR === */
+        :root {
+            --noche-profunda: #0b132b;
+            --azul-noche: #1c2541;
+            --azul-polvo: #3a506b;
+            --atardecer-rosita: #ff9a9e;
+            --melocoton: #fecfef;
+            --blanco-cristal: rgba(255, 255, 255, 0.1);
+            --borde-cristal: rgba(255, 255, 255, 0.2);
+            --texto-claro: #f4f4f9;
+        }
 
         /* 2. BASE Y FONDO */
         body {
             margin: 0;
-            font-family: 'Poppins', sans-serif !important; 
-            color: #1e293b;
+            font-family: 'Nunito', sans-serif !important; 
+            color: var(--texto-claro);
             overflow-x: hidden;
             min-height: 100vh;
         }
 
+        /* Degradado Atardecer-Noche fijo */
         body::before {
             content: "";
             position: fixed;
             top: 0; left: 0;
             width: 100%; height: 100%;
-            background: linear-gradient(135deg, #a7ffeb 0%, #e0f7fa 100%);
-            z-index: -1;
+            background: linear-gradient(135deg, var(--noche-profunda) 0%, var(--azul-noche) 40%, var(--azul-polvo) 70%, var(--atardecer-rosita) 100%);
+            z-index: -2;
         }
 
         #contenido-protegido {
             display: none;
+            padding-bottom: 50px;
         }
 
-        /* 3. CABECERA Y TEXTOS */
-        h1 {
-            text-align: center;
-            font-family: 'Dancing Script', cursive !important;
-            font-size: clamp(30px, 6vw, 50px);
-            margin: 40px 0;
-            color: #1a237e;
-            font-weight: 800;
+        /* Animación de hojitas cayendo (Estilo Heartstopper) */
+        .hoja {
+            position: fixed;
+            color: var(--melocoton);
+            font-size: 1.5rem;
+            animation: caer 10s linear infinite;
+            z-index: -1;
+            opacity: 0.5;
+        }
+        @keyframes caer {
+            0% { transform: translateY(-10vh) rotate(0deg); }
+            100% { transform: translateY(110vh) rotate(360deg); }
         }
 
-        .contenedor_0 {
-            text-align: center;
-            max-width: 800px;
-            margin: 0 auto 40px;
-            padding: 25px;
-            background: rgba(255, 255, 255, 0.4);
-            backdrop-filter: blur(10px);
-            border-radius: 30px;
-            border: 1px solid rgba(255, 255, 255, 0.5);
-            font-size: 18px;
-            color: #1e293b !important; /* TEXTO EN NEGRO */
-            line-height: 1.6;
-            font-weight: bold;
-        }
-
-        .centrada {
-            display: block;
-            margin: auto;
-            border-radius: 24px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            border: 6px solid white;
-            margin-bottom: 30px;
-            max-width: 90%;
-        }
-
-        /* 4. REJILLA Y TARJETAS AZUL OSCURO */
-        [class^="contenedor_"]:not(.contenedor_0) {
-            display: flex;
-            flex-wrap: wrap; 
-            justify-content: center;
-            gap: 35px;
-            padding: 20px;
-            margin-top: 20px;
-            width: 100%;
-            box-sizing: border-box;
-        }
-
-        /* Selector específico para las tarjetas de libros */
-        [class*="c1_"], [class*="c2_"], [class*="c3_"], [class*="c4_"], 
-        [class*="c5_"], [class*="c6_"], [class*="c7_"], [class*="c8_"], 
-        [class*="c9_"], [class*="c10_"], [class*="c11_"], [class*="c12_"] {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 25px;
-            width: 260px;
-            background: rgba(26, 35, 126, 0.9) !important; 
-            backdrop-filter: blur(8px);
-            border: 1px solid rgba(255, 255, 255, 0.2) !important;
-            border-radius: 25px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
-            transition: all 0.4s ease;
-            cursor: pointer;
-            text-align: center;
-            box-sizing: border-box;
-            color: white !important; /* TEXTO BLANCO SOBRE AZUL */
-            font-weight: 600;
-        }
-
-        /* Esto asegura que solo se mueva la tarjeta que tocas, no toda la sección */
-        [class*="c1_"]:hover, [class*="c2_"]:hover, [class*="c3_"]:hover, [class*="c4_"]:hover,
-        [class*="c5_"]:hover, [class*="c6_"]:hover, [class*="c7_"]:hover, [class*="c8_"]:hover,
-        [class*="c9_"]:hover, [class*="c10_"]:hover, [class*="c11_"]:hover, [class*="c12_"]:hover {
-            transform: translateY(-8px);
-            background: rgba(26, 35, 126, 1) !important; 
-            box-shadow: 0 15px 40px rgba(26, 35, 126, 0.4);
-            transition: all 0.3s ease;
-        }
-
-        /* Portadas de los libros */
-        [class^="contenedor_"] img {
-            width: 100%;
-            height: auto;
-            border: 5px solid white !important;
-            border-radius: 12px !important;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.3) !important;
-            margin-bottom: 5px;
-        }
-
-        /* 5. MENÚ SUPERIOR */
+        /* 3. MENÚ SUPERIOR (GLASSMORPHISM) */
         .menu-superior {
-            background: rgba(26, 35, 126, 0.95);
-            backdrop-filter: blur(10px);
-            color: white;
+            background: rgba(11, 19, 43, 0.6);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            color: var(--texto-claro);
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 12px 50px;
+            padding: 15px 50px;
             position: sticky;
             top: 0;
             z-index: 1000;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            border-bottom: 1px solid var(--borde-cristal);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
         }
 
         .menu-superior .logo {
-            font-family: 'Dancing Script', cursive !important;
-            font-size: 26px;
+            font-family: 'Caveat', cursive !important;
+            font-size: 32px;
+            color: var(--melocoton);
+            text-shadow: 1px 1px 5px rgba(255, 154, 158, 0.5);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .menu-superior .logo:hover {
+            color: var(--atardecer-rosita);
         }
 
         .menu-superior ul {
@@ -148,21 +98,239 @@
         }
 
         .menu-superior a {
-            color: white;
+            color: var(--texto-claro);
             text-decoration: none;
             font-weight: 700;
-            font-size: 14px;
+            font-size: 15px;
+            transition: color 0.3s ease;
         }
 
-        /* 6. VISOR PDF (MODAL) */
+        .menu-superior a:hover {
+            color: var(--atardecer-rosita);
+        }
+
+        /* 4. CABECERA Y TEXTOS INTRODUCTORIOS */
+        h1 {
+            text-align: center;
+            font-family: 'Caveat', cursive !important;
+            font-size: clamp(40px, 8vw, 60px);
+            margin: 50px 0 20px 0;
+            color: var(--melocoton);
+            text-shadow: 2px 2px 10px rgba(255, 154, 158, 0.5);
+            font-weight: 600;
+        }
+
+        .centrada {
+            display: block;
+            margin: auto;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+            margin-bottom: 40px;
+            max-width: 90%;
+            width: 400px;
+            object-fit: cover;
+        }
+
+        .contenedor_0 {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 20px;
+            padding: 30px;
+            background: var(--blanco-cristal);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-radius: 20px;
+            border: 1px solid var(--borde-cristal);
+            font-size: 18px;
+            color: var(--texto-claro) !important; 
+            line-height: 1.6;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+        }
+
+        .contenedor_0 p {
+            margin-bottom: 10px;
+        }
+
+        /* CONTADOR DE DÍAS */
+        .contador-amor {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 30px;
+            padding: 20px 30px;
+            background: rgba(11, 19, 43, 0.5);
+            backdrop-filter: blur(12px);
+            border-radius: 20px;
+            border: 1px solid var(--atardecer-rosita);
+            box-shadow: 0 8px 32px 0 rgba(255, 154, 158, 0.2);
+            animation: latido 3s infinite alternate;
+        }
+
+        @keyframes latido {
+            0% { box-shadow: 0 8px 32px 0 rgba(255, 154, 158, 0.1); }
+            100% { box-shadow: 0 8px 32px 0 rgba(255, 154, 158, 0.4); }
+        }
+
+        .contador-amor h3 {
+            font-family: 'Caveat', cursive;
+            font-size: 32px;
+            color: var(--melocoton);
+            margin-bottom: 10px;
+            margin-top: 0;
+            font-weight: 600;
+        }
+
+        #tiempo-juntos {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--texto-claro);
+            line-height: 1.5;
+        }
+
+        .numeros-destacados {
+            color: var(--atardecer-rosita);
+            font-size: 24px;
+        }
+
+        /* SECCIÓN: EL CONTRATO DE AMOR ETERNO */
+        .contenedor-contrato {
+            max-width: 800px;
+            margin: 0 auto 50px;
+            padding: 0 20px;
+            text-align: center;
+        }
+
+        .pergamino {
+            background: var(--blanco-cristal);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--borde-cristal);
+            border-radius: 20px;
+            padding: 35px;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+            position: relative;
+        }
+
+        .pergamino h3 {
+            font-family: 'Caveat', cursive;
+            font-size: 36px;
+            color: var(--melocoton);
+            margin-bottom: 15px;
+            margin-top: 0;
+        }
+
+        .texto-contrato {
+            font-size: 17px;
+            line-height: 1.7;
+            color: var(--texto-claro);
+            margin-bottom: 25px;
+            font-style: italic;
+        }
+
+        .firma-container {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            margin-top: 15px;
+            padding-right: 15px;
+        }
+
+        .etiqueta-firma {
+            font-size: 14px;
+            opacity: 0.8;
+            margin-bottom: 5px;
+        }
+
+        .svg-firma {
+            width: 180px;
+            height: 60px;
+        }
+
+        /* Magia del Scroll: La línea de la firma se dibuja sola */
+        .trazo-firma {
+            stroke-dasharray: 400;
+            stroke-dashoffset: 400;
+            transition: stroke-dashoffset 2s ease-in-out;
+        }
+
+        .contenedor-contrato.visible .trazo-firma {
+            stroke-dashoffset: 0;
+        }
+
+        .firmas-nombres {
+            font-family: 'Caveat', cursive;
+            font-size: 26px;
+            color: var(--melocoton);
+            margin-top: -10px;
+        }
+
+        /* POLAROIDS LIBROS */
+        [class^="contenedor_"]:not(.contenedor_0) {
+            display: flex;
+            flex-wrap: wrap; 
+            justify-content: center;
+            gap: 40px;
+            padding: 20px;
+            margin-top: 20px;
+            width: 100%;
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+            box-sizing: border-box;
+        }
+
+        [class*="c1_"], [class*="c2_"], [class*="c3_"], [class*="c4_"], 
+        [class*="c5_"], [class*="c6_"], [class*="c7_"], [class*="c8_"], 
+        [class*="c9_"], [class*="c10_"], [class*="c11_"], [class*="c12_"] {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: #ffffff !important; 
+            color: #333333 !important; 
+            padding: 15px 15px 30px 15px;
+            border-radius: 5px;
+            width: 250px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.4);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            text-align: center;
+            font-family: 'Caveat', cursive !important;
+            font-size: 24px;
+            line-height: 1.1;
+            font-weight: 600;
+            border: none !important;
+            transform: rotate(-3deg);
+        }
+
+        [class^="contenedor_"]:not(.contenedor_0) > p:nth-child(even) {
+            transform: rotate(4deg);
+        }
+
+        [class^="contenedor_"]:not(.contenedor_0) > p:hover {
+            transform: scale(1.05) rotate(0deg);
+            z-index: 10;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.5);
+        }
+
+        [class^="contenedor_"] img {
+            width: 100%;
+            height: 320px; 
+            object-fit: cover;
+            border: none !important;
+            border-radius: 3px !important;
+            box-shadow: none !important;
+            margin-bottom: 15px;
+            background-color: #eee;
+        }
+
+        /* MODAL PDF */
         .modal-pdf {
             display: none; 
             position: fixed;
             z-index: 3000;
             top: 0; left: 0;
             width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.85);
-            backdrop-filter: blur(5px);
+            background: rgba(11, 19, 43, 0.85); 
+            backdrop-filter: blur(8px);
         }
 
         .modal-contenido {
@@ -174,6 +342,7 @@
             border-radius: 20px;
             overflow: hidden;
             animation: zoomIn 0.3s ease;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
         }
 
         @keyframes zoomIn {
@@ -188,29 +357,56 @@
             cursor: pointer;
             color: white;
             z-index: 3001;
+            transition: color 0.3s ease;
+        }
+        .cerrar-modal:hover {
+            color: var(--atardecer-rosita);
         }
 
-        /* 7. AJUSTES MÓVIL */
+        /* WIDGET MUSICAL & FOOTER */
+        .seccion-musica {
+            max-width: 800px;
+            margin: 60px auto 20px;
+            text-align: center;
+        }
+        .seccion-musica h2 {
+            font-family: 'Caveat', cursive;
+            font-size: 35px;
+            color: var(--melocoton);
+            margin-bottom: 20px;
+        }
+        .spotify-iframe {
+            border-radius: 12px;
+            border: none;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+            width: 100%;
+            max-width: 500px;
+            height: 152px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px;
+            font-size: 1.1rem;
+            color: var(--texto-claro);
+            margin-top: 20px;
+        }
+        footer i { color: var(--atardecer-rosita); margin: 0 5px; }
+        .cat-icon { font-size: 1.5rem; transition: color 0.3s; cursor: pointer;}
+        .cat-icon:hover { color: var(--melocoton); }
+
         @media (max-width: 700px) {
             .menu-superior { padding: 15px; flex-direction: column; gap: 12px; }
-            [class^="contenedor_"]:not(.contenedor_0) { flex-direction: column; align-items: center; }
-            [class*="c"] { width: 90% !important; max-width: 300px; }
-
+            [class^="contenedor_"]:not(.contenedor_0) { flex-direction: column; align-items: center; gap: 30px; }
+            
             .modal-contenido {
                 width: 95% !important;
-                height: 85vh !important; /* Forzamos la altura en el móvil */
+                height: 85vh !important; 
                 margin: 10% auto !important;
-                -webkit-overflow-scrolling: touch; /* Mejora el scroll en iPhone */
-            }
-
-            #visor-pdf {
-                width: 100% !important;
-                height: 100% !important;
-                border: none;
+                -webkit-overflow-scrolling: touch; 
             }
         }
 
-        /* Animación Reveal Scroll */
         .revelar {
             opacity: 0;
             transform: translateY(20px);
@@ -221,231 +417,323 @@
             transform: translateY(0);
         }
     </style>
-   
-    <body>
-        <div id="contenido-protegido">
-            <nav class="menu-superior">
-                <div class="logo">Biblioteca de Mi Novia</div>
-                <ul>
-                    <li><a href="index.html">Página Principal</a></li>
-                    <li><a href="Biblioteca_Tati_Pelis.html">Canciones</a></li>
-                    <li><a href="Cartas.html">Cartas</a></li>
-                    <li><a href="Créditos.html">Créditos</a></li>
-                    <li><a href="Corazao.html">Regalo</a></li>
-                </ul>
-            </nav>
-            <h1>TU PÁGINA DE LECTURA (Hecha por tu novio)</h1>
-            <p><img src="archivos y fotos/Taylor leyendo.webp" alt="Imagen" class="centrada"></p>
-            <div class="contenedor_0">
-                <p class="c0_1">Aquí encontrarás todos los libros que te molan/interesan en versión digital listos para descargar y leer.</p>
-                <p class="c0_2">Se que no te mola demasiado este tipo de lectura pero es mejor que no tenerlos, a si que espero que te guste el regalo :).</p>
-                <p class="c0_3">(Hecho con amor para ti <3)</p>
-            </div>
+</head>
+<body>
 
+    <i class="fas fa-leaf hoja" style="left: 10%; animation-duration: 14s;"></i>
+    <i class="fas fa-leaf hoja" style="left: 30%; animation-duration: 18s; animation-delay: 2s;"></i>
+    <i class="fas fa-leaf hoja" style="left: 70%; animation-duration: 15s; animation-delay: 5s;"></i>
+    <i class="fas fa-leaf hoja" style="left: 85%; animation-duration: 12s; animation-delay: 1s;"></i>
 
-            <div class="contenedor_1 revelar">
-                <p class="c1_1" onclick="abrirLibro('archivos y fotos/Powerless_1.pdf')" style="cursor: pointer;">
-                    <img src="archivos y fotos/Powerless.jpg" class="Powerless_1" width="225"><br>
-                    Powerless
-                </p>
+    <div id="contenido-protegido">
+        <!-- MENÚ SUPERIOR -->
+        <nav class="menu-superior">
+            <a href="index.html" class="logo">Biblioteca de Mi Novia 🌙</a>
+            <ul>
+                <li><a href="index.html">Página Principal</a></li>
+                <li><a href="Biblioteca_Tati_Pelis.html">Canciones</a></li>
+                <li><a href="Cartas.html">Cartas</a></li>
+                <li><a href="Créditos.html">Créditos</a></li>
+                <li><a href="Corazao.html">Regalo</a></li>
+            </ul>
+        </nav>
 
-                <p class="c1_2" onclick="abrirLibro('archivos y fotos/Powerfull_1_5.pdf')" style="cursor: pointer;">
-                    <img src="archivos y fotos/Powerfull.jpg" class="Powerfull_1.5" width="225"><br>
-                    Powerfull
-                </p>
-
-                <p class="c1_3" onclick="abrirLibro('archivos y fotos/Reckless_2.pdf')" style="cursor: pointer;">
-                    <img src="archivos y fotos/Recklessjpg" class="Reckless_2" width="225"><br>
-                    Reckless
-                </p>
-            </div>
-
-
-            <div class="contenedor_2 revelar">
-                <p class="c2_1" onclick="abrirLibro('archivos y fotos/Fearless_3.pdf')" style="cursor: pointer;">
-                    <img src="archivos y fotos/Fearless.jpeg" class="Fearless_3" width="225"><br>
-                    Fearless
-                </p>
-                <p class="c2_2" onclick="abrirLibro('archivos y fotos/La Asistenta Freida McFadden.pdf')" style="cursor: pointer;">
-                    <img src="archivos y fotos/La Asistenta Libro.webp" class="La_Asistenta" width="225"><br>
-                    La asistenta
-                </p>
-                <p class="c2_3" onclick="abrirLibro('archivos y fotos/Una corte de rosas y espinas.pdf')" style="cursor: pointer;">
-                    <img src="archivos y fotos/Un corte de rosas y espinas.jpg" class="Una_Corte_De_Rosas_Y_Espinas_1" width="225"><br>
-                    Una corte de rosas y espinas
-                </p>
-            </div>
-
-            <div class="contenedor_3 revelar">
-                <p class="c3_1" onclick="abrirLibro('archivos y fotos/Una Corte de Niebla y Furia - Sarah J. Maas.pdf')" style="cursor: pointer;">
-                    <img src="archivos y fotos/Un corte de niebla y furia.jpg" class="Una_Corte_De_Niebla_Y_Furia_2" width="225"><br>
-                    Una corte de niebla y furia
-                </p>
-                <p class="c3_2" onclick="abrirLibro('archivos y fotos/Una Corte de Alas y Ruina - Sarah J. Maas.pdf')" style="cursor: pointer;">
-                    <img src="archivos y fotos/Un corte de alas y ruina.jpg" class="Una_Corte_De_Alas_Y_Ruina_3" width="225"><br>
-                    Una corte de alas y ruina
-                </p>
-                <p class="c3_3" onclick="abrirLibro('archivos y fotos/Una corte de hielo y estrellas - Sarah J Maas.pdf')" style="cursor: pointer;">
-                    <img src="archivos y fotos/Un corte de hielo y estrellas.jpg" class="Una_Corte_De_Hielo_Y_Estrellas_4" width="225"><br>
-                    Una corte de hielo y estrellas
-                </p>
-            </div>
-
-            <div class="contenedor_4 revelar">
-                <p class="c4_1" onclick="abrirLibro('archivos y fotos/Una Corte de Llamas Plateadas - Sarah J. Maas.pdf')" style="cursor: pointer;">
-                    <img src="archivos y fotos/Un corte de llamas plateadas.webp" class="Una_Corte_De_Llamas_Plateadas_5" width="225"><br>
-                    Una corte de llamas plateadas
-                </p>
-                <p class="c4_2" onclick="abrirLibro('archivos y fotos/Destrozame Tahereh Mafi.pdf')" style="cursor: pointer;">
-                    <img src="archivos y fotos/Shatter me.jpg" class="Shatter_me_1" width="225"><br>
-                    Shatter me
-                </p>
-                <p class="c4_3" onclick="abrirLibro('archivos y fotos/Libérame Tahereh Mafi.pdf')" style="cursor: pointer;">
-                    <img src="archivos y fotos/Unravel me.jpg" class="Unravel_Me_2" width="225"><br>
-                    Unravel me
-                </p>
-            </div>
-
-            <div class="contenedor_5 revelar">
-                <p class="c5_1" onclick="abrirLibro('archivos y fotos/Enciéndeme - Tahereh Mafi.pdf')" style="cursor: pointer;">
-                    <img src="archivos y fotos/Ignite me.jpg" class="Ignite_Me_3" width="225"><br>
-                    Ignite me
-                </p>
-                <p class="c5_2" onclick="abrirLibro('archivos y fotos/Reconstruyeme - Tahereh Mafi.pdf')" style="cursor: pointer;">
-                    <img src="archivos y fotos/Restore me.jpg" class="Restore_Me_4" width="225"><br>
-                    Restore me
-                </p>
-                <p class="c5_3" onclick="abrirLibro('archivos y fotos/Desafiame Tahereh Mafi.pdf')" style="cursor: pointer;">
-                    <img src="archivos y fotos/Defy me.jpg" class="Defy_me_5" width="225"><br>
-                    Defy me
-                </p>
-            </div>
-
-            <div class="contenedor_6 revelar">
-                <p class="c6_1" onclick="abrirLibro('archivos y fotos/Imagine Me Tahereh Mafi.pdf')" style="cursor: pointer;">
-                    <img src="archivos y fotos/Imagine me.jpg" class="Imagine_Me_6" width="225"><br>
-                    Imagine me
-                </p>
-                <p class="c6_2" onclick="abrirLibro('archivos y fotos/Destroy Me - Tehereh Mafi.pdf')" style="cursor: pointer;">
-                    <img src="archivos y fotos/Destroy me.jpg" class="Destroy_Me_1_5" width="225"><br>
-                    Destroy me
-                </p>
-                <p class="c6_3" onclick="abrirLibro('archivos y fotos/Fracture Me 2.5.pdf')" style="cursor: pointer;">
-                    <img src="archivos y fotos/Fracture me.jpg" class="Fracture_Me_2_5" width="225"><br>
-                    Fracture me
-                </p>
-            </div>
-
-            <div class="contenedor_7 revelar">
-                <p class="c7_1" onclick="abrirLibro('archivos y fotos/Shadow Me - Shatter Me Series.pdf')" style="cursor: pointer;">
-                    <img src="archivos y fotos/Shadow me.jpg" class="Shadow_Me_4_5" width="225"><br>
-                    Shadow me
-                </p>
-                <p class="c7_2" onclick="abrirLibro('archivos y fotos/Revelame Tahereh Mafi.pdf')" style="cursor: pointer;">
-                    <img src="archivos y fotos/Reveal me.jpg" class="Reveal_Me_5_5" width="225"><br>
-                    Reveal me
-                </p>
-                <p class="c7_3" onclick="window.open('https://es.scribd.com/document/648854287/6-5-Believe-Me-Tahereh-Mafi', '_blank')" style="cursor: pointer;">
-                    <img src="archivos y fotos/Believe me.jpg" class="Believe_Me_6_5" width="225"><br>
-                    Believe me (Enlace externo)
-                </p>
-            </div>
-
-            <div class="contenedor_8 revelar">
-                <p class="c8_1" onclick="abrirLibro('archivos y fotos/Binding 13 - Chloe Walsh.pdf')" style="cursor: pointer;">
-                    <img src="archivos y fotos/Binding 13.jpg" class="Binding_13" width="225"><br>
-                    Binding 13
-                </p>
-                <p class="c8_2" onclick="window.open('https://spread.epub.pub/epub/65b1129a120eae6601723442', '_blank')" style="cursor: pointer;">
-                    <img src="archivos y fotos/Keeping 13.jpg" class="Keeping_13" width="225"><br>
-                    Keeping 13 (Enlace externo)
-                </p>
-                <p class="c8_3" onclick="abrirLibro('archivos y fotos/Saving 6 Chloe Walsh.pdf')" style="cursor: pointer;">
-                    <img src="archivos y fotos/Saving 6.jpg" class="Saving_6" width="225"><br>
-                    Saving 6
-                </p>
-            </div>
-
-            <div class="contenedor_9 revelar">
-                <p class="c9_1" onclick="window.open('https://es.scribd.com/document/761539569/Redeeming-6', '_blank')" style="cursor: pointer;">
-                    <img src="archivos y fotos/Redeeming 6.avif" class="Redeeming_6" width="225"><br>
-                    Redeeming 6 (Enlace externo)
-                </p>
-                <p class="c9_2" onclick="abrirLibro('archivos y fotos/Taming 7 Chloe Walsh.pdf')" style="cursor: pointer;">
-                    <img src="archivos y fotos/Tamming 77.jpg" class="Taming_7" width="225"><br>
-                    Taming 7
-                </p>
-                <p class="c9_3" onclick="abrirLibro('archivos y fotos/Releasing 10 Chloe Walsh.pdf')" style="cursor: pointer;">
-                    <img src="archivos y fotos/Releasing 10.jpg" class="Releasing_10" width="225"><br>
-                    Releasing 10
-                </p>
-            </div>
-
-            <div class="contenedor_10 revelar">
-                <p class="c10_1" onclick="abrirLibro('archivos y fotos/Los siete maridos de Evelyn Hugo.pdf')" style="cursor: pointer;">
-                    <img src="archivos y fotos/Los siete maridos de Evelyn Hugo.jpg" class="Los_Siete_Maridos_De_Evelyn_Hugo" width="225"><br>
-                    Los siete maridos de Evelyn Hugo
-                </p>
-                <p class="c10_2" onclick="window.open('https://es.scribd.com/document/670122038/Mejor-Que-en-Las-Peliculas-Lynn-Painter', '_blank')" style="cursor: pointer;">
-                    <img src="archivos y fotos/mejor que en las pelis.webp" class="Mejor_Que_En_Las_Peliculas" width="225"><br>
-                    Mejor que en las películas (Enlace externo)
-                </p>
-                <p class="c10_3" onclick="abrirLibro('archivos y fotos/El color de las cosas invisibles - Andrea Longarela.pdf')" style="cursor: pointer;">
-                    <img src="archivos y fotos/El color de las cosas invisibles.jpg" class="El_Color_De_Las_Cosas_Invisibles" width="225"><br>
-                    El color de las cosas invisibles
-                </p>
-            </div>
-
-            <div class="contenedor_11 revelar">
-                <p class="c11_1" onclick="abrirLibro('archivos y fotos/Bad Ash Alina Not.pdf')" style="cursor: pointer;">
-                    <img src="archivos y fotos/Saltan chispas.jpg" class="Bad_Ash" width="225"><br>
-                    Bad ash (Trilogía entera)
-                </p>
-                <p class="c11_2" onclick="abrirLibro('archivos y fotos/Hecha de Estrellas - Ashley Herring Blake.pdf')" style="cursor: pointer;">
-                    <img src="archivos y fotos/Hecha de estrellas.jpg" class="Hecha_De_Estrellas" width="225"><br>
-                    Hecha de estrellas
-                </p>
-                <p class="c11_3" onclick="abrirLibro('archivos y fotos/Llamada a Sam Dustin Thao.pdf')" style="cursor: pointer;">
-                    <img src="archivos y fotos/Has llamado a sam.jpg" class="Has_Llamado_A_Sam" width="225"><br>
-                    Has llamado a Sam
-                </p>
-            </div>
-
-            <div class="contenedor_12 revelar">
-                <p class="c12_1" onclick="abrirLibro('archivos y fotos/bad ash suelo sagrado.pdf')" style="cursor: pointer;">
-                    <img src="archivos y fotos/Bad ash suelo sagrado.jpg" class="Bad_Ash_Suelo_Sagrado" width="225"><br>
-                    Bad ash: Suelo sagrado
-                </p>
-                <p class="c12_2" onclick="abrirLibro('archivos y fotos/Piezas Rotas Alina.pdf')" style="cursor: pointer;">
-                    <img src="archivos y fotos/Tyler.jpg" class="Bad_Ash_Tyler" width="225"><br>
-                    Bad ash: Tyler
-                </p>
-                <p class="c12_3" onclick="abrirLibro('archivos y fotos/bad ash suelo sagrado 2.pdf')" style="cursor: pointer;">
-                    <img src="archivos y fotos/Bad ash suelo sagrado 2.jpg" class="Bad_Ash_Suelo_Sagrado_2" width="225"><br>
-                    Bad ash: Suelo sagrado II
-                </p>
-            </div>
+        <!-- CABECERA -->
+        <h1>TU PÁGINA DE LECTURA ✨</h1>
+        <p><img src="archivos y fotos/Taylor leyendo.webp" alt="Taylor leyendo" class="centrada"></p>
+        
+        <div class="contenedor_0">
+            <p class="c0_1">Aquí encontrarás todos los libros que te molan/interesan en versión digital listos para descargar y leer.</p>
+            <p class="c0_2">Sé que no te mola demasiado este tipo de lectura pero es mejor que no tenerlos, así que espero que te guste el regalo :).</p>
+            <p class="c0_3" style="font-family: 'Caveat', cursive; font-size: 26px; color: var(--melocoton); margin-top: 15px;">(Hecho con amor para ti 🤍)</p>
         </div>
-        <script>
-        // --- LÓGICA DE ACCESO Y CONTRASEÑA ---
+
+        <!-- CONTADOR DE DÍAS -->
+        <div class="contador-amor">
+            <h3>Tiempo juntos ⏳💕</h3>
+            <p id="tiempo-juntos">Calculando el tiempo de nuestra historia...</p>
+        </div>
+
+        <!-- CONTRATO DE AMOR ETERNO (FIRMA AUTOMÁTICA AL SCROLLEAR) -->
+        <section class="contenedor-contrato revelar">
+            <div class="pergamino">
+                <h3>Contrato de Amor Incondicional 📜✨</h3>
+                <p class="texto-contrato">
+                    "Queda oficialmente pactado entre los dos que, cueste lo que cueste, nos comprometeremos a querernos para siempre, a escucharnos, a nunca dejarnos ir y a arreglar cada bache o discusión juntos, porque no hay nadie más con quien prefiera perder y ganar este juego." 🌙🤍
+                </p>
+                <div class="firma-container">
+                    <span class="etiqueta-firma">Firmado de por vida:</span>
+                    <svg class="svg-firma" viewBox="0 0 300 100" xmlns="http://www.w3.org/2000/svg">
+                        <path class="trazo-firma" d="M 10,80 Q 50,10 90,60 T 170,40 Q 210,90 260,30" fill="transparent" stroke="var(--atardecer-rosita)" stroke-width="4" stroke-linecap="round"/>
+                    </svg>
+                    <div class="firmas-nombres">Adrián & Tati</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- LIBROS -->
+        <div class="contenedor_1 revelar">
+            <p class="c1_1" onclick="abrirLibro('archivos y fotos/Powerless_1.pdf')">
+                <img src="archivos y fotos/Powerless.jpg" class="Powerless_1"><br>
+                Powerless
+            </p>
+            <p class="c1_2" onclick="abrirLibro('archivos y fotos/Powerfull_1_5.pdf')">
+                <img src="archivos y fotos/Powerfull.jpg" class="Powerfull_1.5"><br>
+                Powerfull
+            </p>
+            <p class="c1_3" onclick="abrirLibro('archivos y fotos/Reckless_2.pdf')">
+                <img src="archivos y fotos/Recklessjpg" class="Reckless_2"><br>
+                Reckless
+            </p>
+        </div>
+
+        <div class="contenedor_2 revelar">
+            <p class="c2_1" onclick="abrirLibro('archivos y fotos/Fearless_3.pdf')">
+                <img src="archivos y fotos/Fearless.jpeg" class="Fearless_3"><br>
+                Fearless
+            </p>
+            <p class="c2_2" onclick="abrirLibro('archivos y fotos/La Asistenta Freida McFadden.pdf')">
+                <img src="archivos y fotos/La Asistenta Libro.webp" class="La_Asistenta"><br>
+                La asistenta
+            </p>
+            <p class="c2_3" onclick="abrirLibro('archivos y fotos/Una corte de rosas y espinas.pdf')">
+                <img src="archivos y fotos/Un corte de rosas y espinas.jpg" class="Una_Corte_De_Rosas_Y_Espinas_1"><br>
+                Una corte de<br>rosas y espinas
+            </p>
+        </div>
+
+        <div class="contenedor_3 revelar">
+            <p class="c3_1" onclick="abrirLibro('archivos y fotos/Una Corte de Niebla y Furia - Sarah J. Maas.pdf')">
+                <img src="archivos y fotos/Un corte de niebla y furia.jpg" class="Una_Corte_De_Niebla_Y_Furia_2"><br>
+                Una corte de<br>niebla y furia
+            </p>
+            <p class="c3_2" onclick="abrirLibro('archivos y fotos/Una Corte de Alas y Ruina - Sarah J. Maas.pdf')">
+                <img src="archivos y fotos/Un corte de alas y ruina.jpg" class="Una_Corte_De_Alas_Y_Ruina_3"><br>
+                Una corte de<br>alas y ruina
+            </p>
+            <p class="c3_3" onclick="abrirLibro('archivos y fotos/Una corte de hielo y estrellas - Sarah J Maas.pdf')">
+                <img src="archivos y fotos/Un corte de hielo y estrellas.jpg" class="Una_Corte_De_Hielo_Y_Estrellas_4"><br>
+                Una corte de<br>hielo y estrellas
+            </p>
+        </div>
+
+        <div class="contenedor_4 revelar">
+            <p class="c4_1" onclick="abrirLibro('archivos y fotos/Una Corte de Llamas Plateadas - Sarah J. Maas.pdf')">
+                <img src="archivos y fotos/Un corte de llamas plateadas.webp" class="Una_Corte_De_Llamas_Plateadas_5"><br>
+                Una corte de<br>llamas plateadas
+            </p>
+            <p class="c4_2" onclick="abrirLibro('archivos y fotos/Destrozame Tahereh Mafi.pdf')">
+                <img src="archivos y fotos/Shatter me.jpg" class="Shatter_me_1"><br>
+                Shatter me
+            </p>
+            <p class="c4_3" onclick="abrirLibro('archivos y fotos/Libérame Tahereh Mafi.pdf')">
+                <img src="archivos y fotos/Unravel me.jpg" class="Unravel_Me_2"><br>
+                Unravel me
+            </p>
+        </div>
+
+        <div class="contenedor_5 revelar">
+            <p class="c5_1" onclick="abrirLibro('archivos y fotos/Enciéndeme - Tahereh Mafi.pdf')">
+                <img src="archivos y fotos/Ignite me.jpg" class="Ignite_Me_3"><br>
+                Ignite me
+            </p>
+            <p class="c5_2" onclick="abrirLibro('archivos y fotos/Reconstruyeme - Tahereh Mafi.pdf')">
+                <img src="archivos y fotos/Restore me.jpg" class="Restore_Me_4"><br>
+                Restore me
+            </p>
+            <p class="c5_3" onclick="abrirLibro('archivos y fotos/Desafiame Tahereh Mafi.pdf')">
+                <img src="archivos y fotos/Defy me.jpg" class="Defy_me_5"><br>
+                Defy me
+            </p>
+        </div>
+
+        <div class="contenedor_6 revelar">
+            <p class="c6_1" onclick="abrirLibro('archivos y fotos/Imagine Me Tahereh Mafi.pdf')">
+                <img src="archivos y fotos/Imagine me.jpg" class="Imagine_Me_6"><br>
+                Imagine me
+            </p>
+            <p class="c6_2" onclick="abrirLibro('archivos y fotos/Destroy Me - Tehereh Mafi.pdf')">
+                <img src="archivos y fotos/Destroy me.jpg" class="Destroy_Me_1_5"><br>
+                Destroy me
+            </p>
+            <p class="c6_3" onclick="abrirLibro('archivos y fotos/Fracture Me 2.5.pdf')">
+                <img src="archivos y fotos/Fracture me.jpg" class="Fracture_Me_2_5"><br>
+                Fracture me
+            </p>
+        </div>
+
+        <div class="contenedor_7 revelar">
+            <p class="c7_1" onclick="abrirLibro('archivos y fotos/Shadow Me - Shatter Me Series.pdf')">
+                <img src="archivos y fotos/Shadow me.jpg" class="Shadow_Me_4_5"><br>
+                Shadow me
+            </p>
+            <p class="c7_2" onclick="abrirLibro('archivos y fotos/Revelame Tahereh Mafi.pdf')">
+                <img src="archivos y fotos/Reveal me.jpg" class="Reveal_Me_5_5"><br>
+                Reveal me
+            </p>
+            <p class="c7_3" onclick="window.open('https://es.scribd.com/document/648854287/6-5-Believe-Me-Tahereh-Mafi', '_blank')">
+                <img src="archivos y fotos/Believe me.jpg" class="Believe_Me_6_5"><br>
+                Believe me
+            </p>
+        </div>
+
+        <div class="contenedor_8 revelar">
+            <p class="c8_1" onclick="abrirLibro('archivos y fotos/Binding 13 - Chloe Walsh.pdf')">
+                <img src="archivos y fotos/Binding 13.jpg" class="Binding_13"><br>
+                Binding 13
+            </p>
+            <p class="c8_2" onclick="window.open('https://spread.epub.pub/epub/65b1129a120eae6601723442', '_blank')">
+                <img src="archivos y fotos/Keeping 13.jpg" class="Keeping_13"><br>
+                Keeping 13
+            </p>
+            <p class="c8_3" onclick="abrirLibro('archivos y fotos/Saving 6 Chloe Walsh.pdf')">
+                <img src="archivos y fotos/Saving 6.jpg" class="Saving_6"><br>
+                Saving 6
+            </p>
+        </div>
+
+        <div class="contenedor_9 revelar">
+            <p class="c9_1" onclick="window.open('https://es.scribd.com/document/761539569/Redeeming-6', '_blank')">
+                <img src="archivos y fotos/Redeeming 6.avif" class="Redeeming_6"><br>
+                Redeeming 6
+            </p>
+            <p class="c9_2" onclick="abrirLibro('archivos y fotos/Taming 7 Chloe Walsh.pdf')">
+                <img src="archivos y fotos/Tamming 77.jpg" class="Taming_7"><br>
+                Taming 7
+            </p>
+            <p class="c9_3" onclick="abrirLibro('archivos y fotos/Releasing 10 Chloe Walsh.pdf')">
+                <img src="archivos y fotos/Releasing 10.jpg" class="Releasing_10"><br>
+                Releasing 10
+            </p>
+        </div>
+
+        <div class="contenedor_10 revelar">
+            <p class="c10_1" onclick="abrirLibro('archivos y fotos/Los siete maridos de Evelyn Hugo.pdf')">
+                <img src="archivos y fotos/Los siete maridos de Evelyn Hugo.jpg" class="Los_Siete_Maridos_De_Evelyn_Hugo"><br>
+                Los 7 maridos<br>de Evelyn Hugo
+            </p>
+            <p class="c10_2" onclick="window.open('https://es.scribd.com/document/670122038/Mejor-Que-en-Las-Peliculas-Lynn-Painter', '_blank')">
+                <img src="archivos y fotos/mejor que en las pelis.webp" class="Mejor_Que_En_Las_Peliculas"><br>
+                Mejor que en<br>las películas
+            </p>
+            <p class="c10_3" onclick="abrirLibro('archivos y fotos/El color de las cosas invisibles - Andrea Longarela.pdf')">
+                <img src="archivos y fotos/El color de las cosas invisibles.jpg" class="El_Color_De_Las_Cosas_Invisibles"><br>
+                El color de las<br>cosas invisibles
+            </p>
+        </div>
+
+        <div class="contenedor_11 revelar">
+            <p class="c11_1" onclick="abrirLibro('archivos y fotos/Bad Ash Alina Not.pdf')">
+                <img src="archivos y fotos/Saltan chispas.jpg" class="Bad_Ash"><br>
+                Bad ash<br>(Trilogía)
+            </p>
+            <p class="c11_2" onclick="abrirLibro('archivos y fotos/Hecha de Estrellas - Ashley Herring Blake.pdf')">
+                <img src="archivos y fotos/Hecha de estrellas.jpg" class="Hecha_De_Estrellas"><br>
+                Hecha de estrellas
+            </p>
+            <p class="c11_3" onclick="abrirLibro('archivos y fotos/Llamada a Sam Dustin Thao.pdf')">
+                <img src="archivos y fotos/Has llamado a sam.jpg" class="Has_Llamado_A_Sam"><br>
+                Has llamado a Sam
+            </p>
+        </div>
+
+        <div class="contenedor_12 revelar">
+            <p class="c12_1" onclick="abrirLibro('archivos y fotos/bad ash suelo sagrado.pdf')">
+                <img src="archivos y fotos/Bad ash suelo sagrado.jpg" class="Bad_Ash_Suelo_Sagrado"><br>
+                Bad ash:<br>Suelo sagrado
+            </p>
+            <p class="c12_2" onclick="abrirLibro('archivos y fotos/Piezas Rotas Alina.pdf')">
+                <img src="archivos y fotos/Tyler.jpg" class="Bad_Ash_Tyler"><br>
+                Bad ash:<br>Tyler
+            </p>
+            <p class="c12_3" onclick="abrirLibro('archivos y fotos/bad ash suelo sagrado 2.pdf')">
+                <img src="archivos y fotos/Bad ash suelo sagrado 2.jpg" class="Bad_Ash_Suelo_Sagrado_2"><br>
+                Bad ash:<br>Suelo sagrado II
+            </p>
+        </div>
+
+        <!-- MÚSICA DEDICADA -->
+        <div class="seccion-musica revelar">
+            <h2><i class="fas fa-headphones-alt"></i> Para acompañar la lectura</h2>
+            <iframe class="spotify-iframe" src="https://open.spotify.com/embed/track/1BxfuPKGuaTgP7aM0Bbdwr?utm_source=generator&theme=0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+        </div>
+
+        <!-- FOOTER GATITOS -->
+        <footer>
+            <p>Hecho con <i class="fas fa-heart"></i> por tu bollito de crema <i class="fas fa-cat cat-icon"></i></p>
+        </footer>
+
+    </div>
+
+    <!-- VISOR DE PDF MODAL -->
+    <div id="miModal" class="modal-pdf">
+        <span class="cerrar-modal" onclick="cerrarLibro()">&times;</span>
+        <div class="modal-contenido">
+            <iframe id="visor-pdf" src="" width="100%" height="100%" style="border:none;"></iframe>
+        </div>
+    </div>
+
+    <script>
         const passwordCorrecta = "1234"; 
         const contenido = document.getElementById('contenido-protegido');
 
         if (sessionStorage.getItem('accesoPermitido') === 'true') {
             contenido.style.display = 'block';
             iniciarFunciones();
+            iniciarContador(); 
         } else {
             let intento = prompt("Introduce la contraseña para ver la biblioteca:");
             if (intento === passwordCorrecta) {
                 sessionStorage.setItem('accesoPermitido', 'true');
                 contenido.style.display = 'block';
                 iniciarFunciones();
+                iniciarContador(); 
             } else {
                 alert("Contraseña incorrecta.");
                 window.location.reload(); 
             }
         }
 
+        // LÓGICA DEL CONTADOR DE TIEMPO JUNTOS
+        function iniciarContador() {
+            const fechaInicio = new Date("2024-06-18T00:00:00");
+            
+            function actualizarTiempo() {
+                const ahora = new Date();
+                
+                let años = ahora.getFullYear() - fechaInicio.getFullYear();
+                let meses = ahora.getMonth() - fechaInicio.getMonth();
+                let dias = ahora.getDate() - fechaInicio.getDate();
+
+                if (dias < 0) {
+                    meses--;
+                    const ultimoDiaMesAnterior = new Date(ahora.getFullYear(), ahora.getMonth(), 0).getDate();
+                    dias += ultimoDiaMesAnterior;
+                }
+                if (meses < 0) {
+                    años--;
+                    meses += 12;
+                }
+
+                let diff = ahora - fechaInicio;
+                const horas = Math.floor((diff / (1000 * 60 * 60)) % 24);
+                const minutos = Math.floor((diff / 1000 / 60) % 60);
+                const segundos = Math.floor((diff / 1000) % 60);
+
+                let texto = "";
+                if(años > 0) texto += `<span class="numeros-destacados">${años}</span> años, `;
+                texto += `<span class="numeros-destacados">${meses}</span> meses, <span class="numeros-destacados">${dias}</span> días,<br>`;
+                texto += `<span class="numeros-destacados">${horas}</span> horas, <span class="numeros-destacados">${minutos}</span> min y <span class="numeros-destacados">${segundos}</span> s<br>`;
+                texto += `<span style="font-family: 'Caveat', cursive; font-size: 26px; color: var(--atardecer-rosita); display:block; margin-top:10px;">compartiendo esta locura ✨</span>`;
+
+                document.getElementById("tiempo-juntos").innerHTML = texto;
+            }
+
+            setInterval(actualizarTiempo, 1000);
+            actualizarTiempo(); 
+        }
+
+        // REVELAR ELEMENTOS AL SCROLL (Incluye la firma del contrato)
         function iniciarFunciones() {
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
@@ -457,19 +745,14 @@
             document.querySelectorAll('.revelar').forEach(el => observer.observe(el));
         }
 
-        // --- FUNCIÓN INTELIGENTE PARA ABRIR LIBROS ---
+        // ABRIR LECTOR DE LIBROS
         function abrirLibro(ruta) {
-            // Detectamos si es un dispositivo móvil
             const esMovil = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-
             if (esMovil) {
-                // EXCLUSIVAMENTE EN MÓVIL: Se abre en pestaña nueva (como antes)
                 window.open(ruta, '_blank');
             } else {
-                // EN PC: Se abre el visor elegante (modal)
                 const modal = document.getElementById('miModal');
                 const iframe = document.getElementById('visor-pdf');
-                
                 iframe.src = ""; 
                 setTimeout(() => {
                     iframe.src = ruta;
@@ -491,13 +774,7 @@
             const modal = document.getElementById('miModal');
             if (event.target == modal) { cerrarLibro(); }
         };
-        </script>
-        <script defer src="/_vercel/insights/script.js"></script>
-        <div id="miModal" class="modal-pdf">
-            <span class="cerrar-modal" onclick="cerrarLibro()">&times;</span>
-            <div class="modal-contenido">
-                <iframe id="visor-pdf" src="" width="100%" height="100%" style="border:none;"></iframe>
-            </div>
-        </div>
-    </body>
+    </script>
+    <script defer src="/_vercel/insights/script.js"></script>
+</body>
 </html>

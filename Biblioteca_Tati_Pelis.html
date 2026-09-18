@@ -1,150 +1,211 @@
 <!DOCTYPE html>
 <html lang="es">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>La biblioteca de mi novia - Canciones</title>
-        <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-    </head>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>La biblioteca de mi novia - Canciones 🌙✨</title>
+    
+    <!-- IMPORTACIÓN DE FUENTES AESTHETIC E ICONOS -->
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600&family=Nunito:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
     <style>
+        /* === VARIABLES DE COLOR === */
+        :root {
+            --noche-profunda: #0b132b;
+            --azul-noche: #1c2541;
+            --azul-polvo: #3a506b;
+            --atardecer-rosita: #ff9a9e;
+            --melocoton: #fecfef;
+            --blanco-cristal: rgba(255, 255, 255, 0.1);
+            --borde-cristal: rgba(255, 255, 255, 0.2);
+            --texto-claro: #f4f4f9;
+        }
+
         /* --- 1. BASE Y FONDO --- */
         body {
             margin: 0;
-            font-family: 'Poppins', sans-serif;
-            color: #1e293b;
+            font-family: 'Nunito', sans-serif !important;
+            color: var(--texto-claro);
             overflow-x: hidden;
             min-height: 100vh;
+            display: flex;
+            flex-direction: column;
         }
 
+        /* Degradado Atardecer-Noche fijo */
         body::before {
             content: "";
             position: fixed;
             top: 0; left: 0;
             width: 100%; height: 100%;
-            background: linear-gradient(135deg, #a7ffeb 0%, #e0f7fa 100%);
+            background: linear-gradient(135deg, var(--noche-profunda) 0%, var(--azul-noche) 40%, var(--azul-polvo) 70%, var(--atardecer-rosita) 100%);
+            z-index: -2;
+        }
+
+        /* Animación de hojitas cayendo (Estilo Heartstopper) */
+        .hoja {
+            position: fixed;
+            color: var(--melocoton);
+            font-size: 1.5rem;
+            animation: caer 10s linear infinite;
             z-index: -1;
+            opacity: 0.5;
+        }
+        @keyframes caer {
+            0% { transform: translateY(-10vh) rotate(0deg); }
+            100% { transform: translateY(110vh) rotate(360deg); }
         }
 
-        /* --- 2. CABECERA Y TEXTOS --- */
-        h1 {
-            text-align: center;
-            font-family: 'Dancing Script', cursive;
-            font-size: clamp(30px, 6vw, 50px);
-            margin: 40px 0;
-            color: #1a237e;
-            font-weight: 800;
-        }
-
-        .contenedor_0 {
-            text-align: center;
-            max-width: 800px;
-            margin: 0 auto 40px;
-            padding: 25px;
-            background: rgba(255, 255, 255, 0.4);
-            backdrop-filter: blur(10px);
-            border-radius: 30px;
-            border: 1px solid rgba(255, 255, 255, 0.5);
-            font-size: 18px;
-            color: #1e293b !important; /* TEXTO EN NEGRO PARA CONTRASTE */
-            line-height: 1.6;
-            font-weight: bold;
-        }
-
-        .centrada {
-            display: block;
-            margin: auto;
-            border-radius: 24px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            border: 6px solid white;
-            margin-bottom: 30px;
-            max-width: 90%;
-        }
-
-        /* --- 3. TARJETAS DE CANCIONES (Estilo Libros) --- */
-        .contenedor_1 {
-            display: flex;
-            flex-wrap: wrap; 
-            justify-content: center;
-            gap: 35px;
-            padding: 20px;
-            margin-top: 20px;
-            width: 100%;
-            box-sizing: border-box;
-        }
-
-        [class*="c1_"] {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 25px;
-            width: 260px;
-            background: rgba(26, 35, 126, 0.9) !important; 
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
-            border: 1px solid rgba(255, 255, 255, 0.2) !important;
-            border-radius: 25px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
-            transition: all 0.4s ease;
-            cursor: pointer;
-            text-align: center;
-            box-sizing: border-box;
-            color: white !important;
-            font-weight: 600;
-            font-size: 17px;
-        }
-
-        [class*="c1_"]:hover {
-            transform: translateY(-10px);
-            background: rgba(26, 35, 126, 1) !important; 
-            box-shadow: 0 15px 40px rgba(26, 35, 126, 0.4);
-        }
-
-        /* Imágenes de las canciones (Estilo Portada) */
-        .contenedor_1 img {
-            width: 100%;
-            height: auto;
-            border: 5px solid white !important;
-            border-radius: 12px !important;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.3) !important;
-            margin-bottom: 15px;
-        }
-
-        /* --- 4. MENÚ SUPERIOR --- */
+        /* --- 2. MENÚ SUPERIOR (GLASSMORPHISM) --- */
         .menu-superior {
-            background: rgba(26, 35, 126, 0.95);
-            backdrop-filter: blur(10px);
-            color: white;
+            background: rgba(11, 19, 43, 0.6);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            color: var(--texto-claro);
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 12px 50px;
+            padding: 15px 50px;
             position: sticky;
             top: 0;
             z-index: 1000;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            border-bottom: 1px solid var(--borde-cristal);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
         }
 
+        /* Logo convertido en enlace */
         .menu-superior .logo {
-            font-family: 'Dancing Script', cursive;
-            font-size: 24px;
+            font-family: 'Caveat', cursive !important;
+            font-size: 32px;
+            color: var(--melocoton);
+            text-shadow: 1px 1px 5px rgba(255, 154, 158, 0.5);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .menu-superior .logo:hover {
+            color: var(--atardecer-rosita);
         }
 
         .menu-superior ul {
             display: flex;
             gap: 25px;
             list-style: none;
-            margin: 0;
-            padding: 0;
+            margin: 0; padding: 0;
         }
 
         .menu-superior a {
-            color: white;
+            color: var(--texto-claro);
             text-decoration: none;
             font-weight: 700;
-            font-size: 14px;
+            font-size: 15px;
+            transition: color 0.3s ease;
         }
 
-        /* --- 5. REPRODUCTOR DE MÚSICA SMOOTH --- */
+        .menu-superior a:hover {
+            color: var(--atardecer-rosita);
+        }
+
+        /* --- 3. CABECERA Y TEXTOS --- */
+        h1 {
+            text-align: center;
+            font-family: 'Caveat', cursive !important;
+            font-size: clamp(40px, 8vw, 60px);
+            margin: 50px 0 20px 0;
+            color: var(--melocoton);
+            text-shadow: 2px 2px 10px rgba(255, 154, 158, 0.5);
+            font-weight: 600;
+        }
+
+        .centrada {
+            display: block;
+            margin: auto;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+            margin-bottom: 40px;
+            max-width: 90%;
+            width: 400px;
+            object-fit: cover;
+        }
+
+        /* Contenedor intro: Efecto Cristal */
+        .contenedor_0 {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 50px;
+            padding: 30px;
+            background: var(--blanco-cristal);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-radius: 20px;
+            border: 1px solid var(--borde-cristal);
+            font-size: 18px;
+            color: var(--texto-claro) !important; 
+            line-height: 1.6;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+        }
+
+        /* --- 4. TARJETAS DE CANCIONES (ESTILO POLAROID) --- */
+        .contenedor_1 {
+            display: flex;
+            flex-wrap: wrap; 
+            justify-content: center;
+            gap: 40px;
+            padding: 20px;
+            margin-top: 20px;
+            width: 100%;
+            max-width: 1000px;
+            margin-left: auto;
+            margin-right: auto;
+            box-sizing: border-box;
+            padding-bottom: 100px; /* Espacio para el reproductor */
+        }
+
+        [class*="c1_"] {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: #ffffff !important; 
+            color: #333333 !important; 
+            padding: 15px 15px 30px 15px;
+            border-radius: 5px;
+            width: 280px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.4);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            text-align: center;
+            font-family: 'Caveat', cursive !important;
+            font-size: 26px;
+            line-height: 1.1;
+            font-weight: 600;
+            border: none !important;
+            transform: rotate(-3deg);
+        }
+
+        [class*="c1_"]:nth-child(even) {
+            transform: rotate(4deg);
+        }
+
+        [class*="c1_"]:hover {
+            transform: scale(1.05) rotate(0deg);
+            z-index: 10;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.5);
+        }
+
+        /* Imágenes de las polaroids */
+        [class*="c1_"] img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            border: none !important;
+            border-radius: 3px !important;
+            box-shadow: none !important;
+            margin-bottom: 15px;
+            background-color: #eee;
+        }
+
+        /* --- 5. REPRODUCTOR DE MÚSICA SMOOTH (GLASSMORPHISM) --- */
         .barra-musica {
             position: fixed;
             bottom: -150px;
@@ -152,13 +213,16 @@
             transform: translateX(-50%);
             width: 90%;
             max-width: 500px;
-            background: white;
+            background: rgba(11, 19, 43, 0.8);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
             padding: 20px;
             border-radius: 25px 25px 0 0;
-            box-shadow: 0 -10px 30px rgba(0,0,0,0.1);
+            box-shadow: 0 -10px 30px rgba(0,0,0,0.4);
             transition: bottom 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             z-index: 2000;
-            border: 1px solid rgba(0,0,0,0.05);
+            border: 1px solid var(--borde-cristal);
+            border-bottom: none;
         }
 
         .barra-musica.activa {
@@ -166,26 +230,33 @@
         }
 
         .info-cancion {
-            color: #1a237e;
-            font-weight: bold;
-            font-size: 16px;
+            color: var(--melocoton);
+            font-family: 'Caveat', cursive;
+            font-size: 24px;
             text-align: center;
             margin-bottom: 10px;
+            letter-spacing: 1px;
         }
 
         audio {
             width: 100%;
             height: 40px;
-            filter: hue-rotate(180deg); /* Ajusta el color del reproductor nativo */
+            border-radius: 20px;
+            outline: none;
+        }
+
+        /* Personalizar el reproductor webkit (Chrome/Safari) */
+        audio::-webkit-media-controls-panel {
+            background-color: rgba(255, 255, 255, 0.9);
         }
 
         .boton-cerrar {
             position: absolute;
-            top: 10px;
+            top: 15px;
             right: 15px;
-            background: #1a237e;
+            background: var(--atardecer-rosita);
             border: none;
-            color: white;
+            color: var(--noche-profunda);
             width: 25px;
             height: 25px;
             border-radius: 50%;
@@ -193,83 +264,118 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 12px;
+            font-size: 14px;
+            font-weight: bold;
+            transition: transform 0.2s, background 0.2s;
         }
 
-        /* --- 6. AJUSTE MÓVIL --- */
+        .boton-cerrar:hover {
+            transform: scale(1.1);
+            background: var(--melocoton);
+        }
+
+        /* --- 6. FOOTER --- */
+        footer {
+            margin-top: auto;
+            text-align: center;
+            padding: 30px;
+            font-size: 1.1rem;
+            color: var(--texto-claro);
+        }
+        footer i { color: var(--atardecer-rosita); margin: 0 5px; }
+
+        /* --- 7. AJUSTE MÓVIL --- */
         @media (max-width: 700px) {
             .menu-superior { padding: 15px; flex-direction: column; gap: 10px; }
-            .contenedor_1 { flex-direction: column; align-items: center; }
-            [class*="c1_"] { width: 90% !important; max-width: 300px; }
+            .contenedor_1 { flex-direction: column; align-items: center; gap: 30px;}
         }
     </style>
-   
-    <body>
-        <nav class="menu-superior">
-            <div class="logo">Biblioteca de Mi Novia</div>
-            <ul>
-                <li><a href="index.html">Página Principal</a></li>
-                <li><a href="Biblioteca_Tati_Pelis.html">Canciones</a></li>
-                <li><a href="Cartas.html">Cartas</a></li>
-                <li><a href="Créditos.html">Créditos</a></li>
-                <li><a href="Corazao.html">Regalo</a></li>
-            </ul>
-        </nav>
+</head>
+<body>
 
-        <h1>TUS CANCIONES (Adrian's Version) ❤️</h1>
-        
-        <p><img src="archivos y fotos/taylor peli.jpeg" alt="Imagen" class="centrada"></p>
-        
-        <div class="contenedor_0">
-            <p>Aquí encontrarás todas las canciones que vaya haciendo para ti.</p>
-            <p>Espero que te guste este pequeño regalo hecho con mucho amor. <span style="color: #e91e63;">❤</span></p>
+    <!-- Animación de hojitas de fondo -->
+    <i class="fas fa-leaf hoja" style="left: 15%; animation-duration: 13s;"></i>
+    <i class="fas fa-leaf hoja" style="left: 45%; animation-duration: 17s; animation-delay: 2s;"></i>
+    <i class="fas fa-leaf hoja" style="left: 80%; animation-duration: 14s; animation-delay: 4s;"></i>
+
+    <!-- MENÚ SUPERIOR -->
+    <nav class="menu-superior">
+        <!-- LOGO CONVERTIDO EN ENLACE -->
+        <a href="index.html" class="logo">Biblioteca de Mi Novia 🌙</a>
+        <ul>
+            <li><a href="index.html">Página Principal</a></li>
+            <li><a href="Biblioteca_Tati_Pelis.html">Canciones</a></li>
+            <li><a href="Cartas.html">Cartas</a></li>
+            <li><a href="Créditos.html">Créditos</a></li>
+            <li><a href="Corazao.html">Regalo</a></li>
+        </ul>
+    </nav>
+
+    <!-- CABECERA -->
+    <h1>TUS CANCIONES (Adrian's Version) 🎸</h1>
+    
+    <p><img src="archivos y fotos/taylor peli.jpeg" alt="Taylor" class="centrada"></p>
+    
+    <div class="contenedor_0">
+        <p>Aquí encontrarás todas las canciones que vaya haciendo para ti.</p>
+        <p style="font-family: 'Caveat', cursive; font-size: 26px; color: var(--melocoton); margin-top: 15px;">
+            Espero que te guste este pequeño regalo hecho con mucho amor. 🤍
+        </p>
+    </div>
+
+    <!-- TARJETAS DE CANCIONES (POLAROIDS) -->
+    <div class="contenedor_1">
+        <div class="c1_1" onclick="prepararMusica('archivos y fotos/Invisible string (Adrian\'s version) [tgVUi1gl29k].mp3', 'Invisible String (Adrian\'s version)')">
+            <img src="archivos y fotos/Cubierta Adrian.webp" class="Invisible_String" alt="Cover 1">
+            Invisible String<br>(Adrian's version)
         </div>
-
-       <div class="contenedor_1">
-            <div class="c1_1" onclick="prepararMusica('archivos y fotos/Invisible string (Adrian\'s version) [tgVUi1gl29k].mp3', 'Invisible String (Adrian\'s version)')">
-                <img src="archivos y fotos/Cubierta Adrian.webp" class="Invisible_String">
-                Invisible String (Adrian's version)
-            </div>
-            
-            <div class="c1_2" onclick="prepararMusica('archivos y fotos/The Archer Instrumental - Taylor Swift.mp3', 'The Archer (Adrian\'s version)')">
-                <img src="archivos y fotos/Portada The Archer.webp" class="The_Archer">
-                The Archer (Adrian's version)
-            </div>
-        </div>
         
-        <div id="barra-reproductor" class="barra-musica">
-            <button onclick="cerrarReproductor()" class="boton-cerrar">✕</button>
-            <div class="info-cancion">
-                Sonando: <span id="titulo-cancion">---</span>
-            </div>
-            <audio id="reproductor-audio" controls>
-                <source id="audio-source" src="" type="audio/mpeg">
-                Tu navegador no soporta audio.
-            </audio>
+        <div class="c1_2" onclick="prepararMusica('archivos y fotos/The Archer Instrumental - Taylor Swift.mp3', 'The Archer (Adrian\'s version)')">
+            <img src="archivos y fotos/Portada The Archer.webp" class="The_Archer" alt="Cover 2">
+            The Archer<br>(Adrian's version)
         </div>
+    </div>
+    
+    <!-- REPRODUCTOR DE MÚSICA (GLASSMORPHISM) -->
+    <div id="barra-reproductor" class="barra-musica">
+        <button onclick="cerrarReproductor()" class="boton-cerrar"><i class="fas fa-times"></i></button>
+        <div class="info-cancion">
+            ✨ Sonando: <span id="titulo-cancion">---</span> ✨
+        </div>
+        <audio id="reproductor-audio" controls>
+            <source id="audio-source" src="" type="audio/mpeg">
+            Tu navegador no soporta audio.
+        </audio>
+    </div>
 
-        <script>
-            // Verificación de acceso
-            if (sessionStorage.getItem('accesoPermitido') !== 'true') {
-                window.location.href = "index.html"; 
-            }
+    <!-- FOOTER -->
+    <footer>
+        <p>Hecho con <i class="fas fa-heart"></i> por tu bollito de crema</p>
+    </footer>
 
-            const barra = document.getElementById('barra-reproductor');
-            const audio = document.getElementById('reproductor-audio');
-            const titulo = document.getElementById('titulo-cancion');
+    <!-- SCRIPT DE FUNCIONAMIENTO -->
+    <script>
+        // Verificación de acceso mediante contraseña desde el index
+        if (sessionStorage.getItem('accesoPermitido') !== 'true') {
+            window.location.href = "index.html"; 
+        }
 
-            function prepararMusica(archivo, nombre) {
-                titulo.innerText = nombre;
-                audio.src = archivo;
-                audio.load();
-                barra.classList.add('activa');
-                audio.play();
-            }
+        const barra = document.getElementById('barra-reproductor');
+        const audio = document.getElementById('reproductor-audio');
+        const titulo = document.getElementById('titulo-cancion');
 
-            function cerrarReproductor() {
-                barra.classList.remove('activa');
-                audio.pause();
-            }
-        </script>
-    </body>
+        function prepararMusica(archivo, nombre) {
+            titulo.innerText = nombre;
+            audio.src = archivo;
+            audio.load();
+            barra.classList.add('activa');
+            audio.play();
+        }
+
+        function cerrarReproductor() {
+            barra.classList.remove('activa');
+            audio.pause();
+        }
+    </script>
+</body>
 </html>

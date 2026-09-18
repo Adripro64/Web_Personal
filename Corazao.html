@@ -3,54 +3,97 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Para Ti - El Corazón de Estrellas</title>
-    <style>
-        /* 1. IMPORTACIÓN DE FUENTES */
-        @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&family=Poppins:wght@300;400;600&display=swap');
+    <title>Para Ti - El Corazón de Estrellas 🌙✨</title>
+    
+    <!-- IMPORTACIÓN DE FUENTES AESTHETIC E ICONOS -->
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600&family=Nunito:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
+    <style>
+        /* === VARIABLES DE COLOR AESTHETIC === */
         :root {
-            --turquesa: #40E0D0;
-            --turquesa-glow: rgba(64, 224, 208, 0.6);
-            --fondo-oscuro: #050505;
-            --texto-claro: #e0e0e0;
-            --azul-menu: rgba(26, 35, 126, 0.95);
+            --noche-profunda: #0b132b;
+            --azul-noche: #1c2541;
+            --azul-polvo: #3a506b;
+            --atardecer-rosita: #ff9a9e;
+            --melocoton: #fecfef;
+            --blanco-cristal: rgba(255, 255, 255, 0.1);
+            --borde-cristal: rgba(255, 255, 255, 0.2);
+            --texto-claro: #f4f4f9;
+            --corazon-glow: rgba(255, 154, 158, 0.6); /* Brillo rosita */
         }
 
         body {
             margin: 0;
             padding: 0;
-            background-color: var(--fondo-oscuro);
+            font-family: 'Nunito', sans-serif !important;
             color: var(--texto-claro);
-            font-family: 'Poppins', sans-serif;
             overflow-x: hidden;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Degradado Atardecer-Noche fijo */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: linear-gradient(135deg, var(--noche-profunda) 0%, var(--azul-noche) 40%, var(--azul-polvo) 70%, var(--atardecer-rosita) 100%);
+            z-index: -2;
         }
 
         #contenido-protegido {
             display: none;
+            flex: 1;
         }
 
-        /* --- 2. MENÚ SUPERIOR RESPONSIVE --- */
+        /* Animación de hojitas cayendo */
+        .hoja {
+            position: fixed;
+            color: var(--melocoton);
+            font-size: 1.5rem;
+            animation: caer 10s linear infinite;
+            z-index: -1;
+            opacity: 0.5;
+        }
+        @keyframes caer {
+            0% { transform: translateY(-10vh) rotate(0deg); }
+            100% { transform: translateY(110vh) rotate(360deg); }
+        }
+
+        /* --- MENÚ SUPERIOR (GLASSMORPHISM) --- */
         .menu-superior {
-            background: var(--azul-menu);
-            backdrop-filter: blur(10px);
-            color: white;
+            background: rgba(11, 19, 43, 0.6);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            color: var(--texto-claro);
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 12px 50px;
+            padding: 15px 50px;
             position: fixed;
             width: 100%;
-            top: 0;
-            left: 0;
+            top: 0; left: 0;
             z-index: 1000;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+            border-bottom: 1px solid var(--borde-cristal);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
             box-sizing: border-box;
         }
 
+        /* Logo convertido en enlace */
         .menu-superior .logo {
-            font-family: 'Dancing Script', cursive !important;
-            font-size: clamp(18px, 4vw, 26px);
-            color: var(--turquesa);
+            font-family: 'Caveat', cursive !important;
+            font-size: clamp(20px, 4vw, 32px);
+            color: var(--melocoton);
+            text-shadow: 1px 1px 5px rgba(255, 154, 158, 0.5);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .menu-superior .logo:hover {
+            color: var(--atardecer-rosita);
         }
 
         .menu-superior ul {
@@ -61,13 +104,18 @@
         }
 
         .menu-superior a {
-            color: white;
+            color: var(--texto-claro);
             text-decoration: none;
             font-weight: 700;
-            font-size: clamp(10px, 3vw, 14px);
+            font-size: clamp(12px, 3vw, 15px);
+            transition: color 0.3s ease;
         }
 
-        /* --- 3. FONDO DE ESTRELLAS --- */
+        .menu-superior a:hover {
+            color: var(--atardecer-rosita);
+        }
+
+        /* --- FONDO DE ESTRELLAS --- */
         #star-container {
             position: fixed;
             top: 0; left: 0;
@@ -85,6 +133,11 @@
             pointer-events: all;
             cursor: pointer;
             will-change: transform, opacity;
+            transition: transform 0.3s ease;
+        }
+
+        .star:hover {
+            transform: scale(1.5) !important;
         }
 
         @keyframes twinkle {
@@ -92,7 +145,7 @@
             50% { opacity: 1; transform: scale(1.2); }
         }
 
-        /* --- 4. CORAZÓN CENTRAL --- */
+        /* --- CORAZÓN CENTRAL --- */
         .heart-wrapper {
             position: fixed;
             top: 50%;
@@ -103,10 +156,10 @@
         }
 
         #heart-svg {
-            fill: var(--turquesa);
+            fill: var(--atardecer-rosita);
             width: clamp(50px, 15vw, 80px);
             height: clamp(50px, 15vw, 80px);
-            filter: drop-shadow(0 0 15px var(--turquesa-glow));
+            filter: drop-shadow(0 0 20px var(--corazon-glow));
             transition: transform 0.1s ease-out;
         }
 
@@ -116,14 +169,14 @@
             left: 50%;
             width: 300px;
             height: 300px;
-            background: radial-gradient(circle, rgba(64, 224, 208, 0.08) 0%, transparent 70%);
+            background: radial-gradient(circle, rgba(255, 154, 158, 0.08) 0%, transparent 70%);
             transform: translate(-50%, -50%);
             z-index: 5;
             pointer-events: none;
             border-radius: 50%;
         }
 
-        /* --- 5. SECCIONES RESPONSIVE --- */
+        /* --- SECCIONES DE CONTENIDO --- */
         .section {
             min-height: 100vh;
             display: flex;
@@ -137,34 +190,41 @@
         .section.left { justify-content: flex-start; }
         .section.right { justify-content: flex-end; }
 
+        /* GLASSMORPHISM CARDS */
         .content-box {
-            max-width: 400px;
+            max-width: 450px;
             width: 100%;
-            padding: 1.5rem;
-            background: rgba(10, 10, 10, 0.8);
+            padding: 2rem;
+            background: var(--blanco-cristal);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
             border-radius: 25px;
-            border: 1px solid rgba(64, 224, 208, 0.2);
-            backdrop-filter: blur(10px);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            border: 1px solid var(--borde-cristal);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            text-align: center;
         }
 
         h2 { 
-            color: var(--turquesa); 
-            font-family: 'Dancing Script', cursive;
-            font-size: clamp(1.5rem, 5vw, 2.2rem);
+            color: var(--melocoton); 
+            font-family: 'Caveat', cursive;
+            font-size: clamp(2rem, 5vw, 3rem);
             margin-top: 0;
+            margin-bottom: 15px;
+            text-shadow: 1px 1px 5px rgba(255, 154, 158, 0.3);
         }
 
         p {
-            font-size: clamp(0.9rem, 3.5vw, 1.05rem);
+            font-size: clamp(1rem, 3.5vw, 1.15rem);
             line-height: 1.6;
+            margin: 0;
         }
 
-        /* --- 6. MODAL --- */
+        /* --- MODAL PARA IMÁGENES --- */
         #image-modal {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.95);
+            background: rgba(11, 19, 43, 0.9);
+            backdrop-filter: blur(5px);
             display: none;
             justify-content: center;
             align-items: center;
@@ -174,35 +234,67 @@
         #modal-img {
             max-width: 90%;
             max-height: 70%;
-            border: 2px solid var(--turquesa);
+            border: 4px solid var(--melocoton);
             border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+            animation: zoomIn 0.3s ease;
+        }
+
+        @keyframes zoomIn {
+            from { transform: scale(0.95); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
         }
 
         .close-modal {
             position: absolute;
             top: 20px; right: 30px;
-            color: white; font-size: 40px; cursor: pointer;
+            color: white; 
+            font-size: 40px; 
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+        
+        .close-modal:hover {
+            color: var(--atardecer-rosita);
         }
 
-        .spacer { height: 50vh; }
+        .spacer { height: 30vh; }
+
+        /* FOOTER */
+        footer {
+            text-align: center;
+            padding: 30px;
+            font-size: 1.1rem;
+            color: var(--texto-claro);
+            z-index: 20;
+            position: relative;
+        }
+        footer i { color: var(--atardecer-rosita); margin: 0 5px; }
 
         /* AJUSTES ESPECÍFICOS PARA MÓVIL */
         @media (max-width: 768px) {
-            .menu-superior { padding: 10px 20px; }
+            .menu-superior { padding: 10px 20px; flex-direction: column; gap: 10px; position: static;}
             .section { padding: 0 5%; justify-content: center !important; }
-            .content-box { text-align: center; }
             .bg-glow { width: 200px; height: 200px; }
+            .content-box { padding: 1.5rem; }
         }
     </style>
 </head>
 <body>
 
+    <!-- Animación de hojitas de fondo -->
+    <i class="fas fa-leaf hoja" style="left: 12%; animation-duration: 15s;"></i>
+    <i class="fas fa-leaf hoja" style="left: 50%; animation-duration: 12s; animation-delay: 3s;"></i>
+    <i class="fas fa-leaf hoja" style="left: 85%; animation-duration: 18s; animation-delay: 1s;"></i>
+
     <div id="contenido-protegido">
         
+        <!-- MENÚ SUPERIOR -->
         <nav class="menu-superior">
-            <div class="logo">Biblioteca de Mi Novia</div>
+            <!-- LOGO CONVERTIDO EN ENLACE -->
+            <a href="index.html" class="logo">Biblioteca de Mi Novia 🌙</a>
             <ul>
-                <li><a href="index.html">Inicio</a></li>
+                <li><a href="index.html">Página Principal</a></li>
                 <li><a href="Biblioteca_Tati_Pelis.html">Canciones</a></li>
                 <li><a href="Cartas.html">Cartas</a></li>
                 <li><a href="Créditos.html">Créditos</a></li>
@@ -221,34 +313,40 @@
 
         <section class="section left" style="margin-top: 80px;">
             <div class="content-box">
-                <h2>Un Refugio Especial</h2>
-                <p>Has sido un hogar durante mucho tiempo. Al bajar, verás cómo las estrellas se unen para hacer latir más fuerte mi corazón por ti.</p>
+                <h2>Un Refugio Especial ✨</h2>
+                <p>Has sido mi hogar durante mucho tiempo. Al bajar, verás cómo las estrellas se unen para hacer latir más fuerte mi corazón por ti.</p>
             </div>
         </section>
 
         <section class="section right">
             <div class="content-box">
-                <h2>Un Amor Único</h2>
-                <p>Contigo he sentido un amor que muchos buscan durante muchisimo tiempo, eres lo mejor que me ha pasado.</p>
+                <h2>Un Amor Único 🤍</h2>
+                <p>Contigo he sentido un amor que muchos buscan durante muchísimo tiempo. Eres, literalmente, lo mejor que me ha pasado.</p>
             </div>
         </section>
 
         <section class="section left">
             <div class="content-box">
-                <h2>Mi Estrellita</h2>
-                <p>Eres la única estrella que hay en mi cielo. Mira cómo el corazón absorbe toda la energía al avanzar.</p>
+                <h2>Mi Estrellita 🌙</h2>
+                <p>Eres la única estrella que hay en mi cielo. Mira cómo el corazón absorbe toda la energía al avanzar, igual que tú iluminas mis días.</p>
             </div>
         </section>
 
         <section class="section right">
             <div class="content-box">
-                <h2>Siempre Aquí</h2>
+                <h2>Siempre Aquí 💌</h2>
                 <p>No importa qué tan lejos estés, mi amor por ti aumentará. Cada estrella que el corazón atrapa es un nuevo "te quiero".</p>
             </div>
         </section>
 
         <div class="spacer"></div>
 
+        <!-- FOOTER -->
+        <footer>
+            <p>Hecho con <i class="fas fa-heart"></i> por tu bollito de crema</p>
+        </footer>
+
+        <!-- MODAL -->
         <div id="image-modal">
             <span class="close-modal" onclick="document.getElementById('image-modal').style.display='none'">&times;</span>
             <img id="modal-img" src="" alt="Recuerdo">
@@ -264,13 +362,13 @@
             contenido.style.display = 'block';
             iniciarTodo();
         } else {
-            let intento = prompt("Contraseña:");
+            let intento = prompt("Introduce la contraseña:");
             if (intento === passwordCorrecta) {
                 sessionStorage.setItem('accesoPermitido', 'true');
                 contenido.style.display = 'block';
                 iniciarTodo();
             } else {
-                alert("Incorrecto");
+                alert("Contraseña incorrecta.");
                 window.location.reload(); 
             }
         }
@@ -284,9 +382,10 @@
 
             const starsArray = [];
             const isMobile = window.innerWidth < 768;
-            const totalNormalStars = isMobile ? 60 : 100; // Menos estrellas en móvil para rendimiento
+            const totalNormalStars = isMobile ? 60 : 100; 
             const totalSpecialStars = isMobile ? 8 : 15; 
             
+            // Reemplaza estas URLs con fotos de ustedes juntos o recuerdos bonitos
             const sampleImages = [
                 'https://picsum.photos/id/10/800/600', 
                 'https://picsum.photos/id/20/800/600',
@@ -308,8 +407,8 @@
                 star.style.setProperty('--duration', `${Math.random() * 3 + 2}s`);
 
                 if (isSpecial) {
-                    star.style.background = 'var(--turquesa)';
-                    star.style.boxShadow = '0 0 8px var(--turquesa)';
+                    star.style.background = 'var(--atardecer-rosita)';
+                    star.style.boxShadow = '0 0 10px var(--atardecer-rosita)';
                     star.onclick = (e) => {
                         e.stopPropagation();
                         modalImg.src = sampleImages[Math.floor(Math.random() * sampleImages.length)];
@@ -329,8 +428,6 @@
                 const docHeight = document.documentElement.scrollHeight - window.innerHeight;
                 const scrollPercent = Math.min(scrollTop / docHeight, 1);
 
-                // AJUSTE DE ESCALA SEGÚN PANTALLA
-                // En móvil crece menos (max 2.5x) que en PC (max 4x) para no tapar el texto
                 const maxGrowth = isMobile ? 2.5 : 4;
                 const pulsacion = Math.sin(scrollTop / 50) * 0.1;
                 const escalaCrecimiento = 1 + (scrollPercent * (maxGrowth - 1));
@@ -345,7 +442,6 @@
                     const moveX = distToCenterX * Math.pow(scrollPercent, 1.3);
                     const moveY = distToCenterY * Math.pow(scrollPercent, 1.3);
                     
-                    // En móvil desaparecen un poco antes
                     const opacityLimit = isMobile ? 0.8 : 1.1;
                     const opacity = 1 - (scrollPercent * opacityLimit);
 
@@ -353,12 +449,12 @@
                     if (!star.isSpecial) star.el.style.opacity = Math.max(0, opacity);
                 });
 
-                // RESPLANDOR
+                // RESPLANDOR (Ajustado al tono atardecer-rosita: rgb 255, 154, 158)
                 const baseGlow = isMobile ? 300 : 450;
                 const glowSize = baseGlow + (scrollPercent * 400);
                 glow.style.width = `${glowSize}px`;
                 glow.style.height = `${glowSize}px`;
-                glow.style.background = `radial-gradient(circle, rgba(64, 224, 208, ${0.1 + scrollPercent * 0.3}) 0%, transparent 70%)`;
+                glow.style.background = `radial-gradient(circle, rgba(255, 154, 158, ${0.1 + scrollPercent * 0.3}) 0%, transparent 70%)`;
             });
         }
     </script>
